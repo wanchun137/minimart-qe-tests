@@ -43,13 +43,21 @@ BASE_URL=<網址> pytest -m smoke
 
 ```
 tests/
-  helpers/            # 登入、購物車共用工具
-  test_auth.py        # 登入／登出
-  test_cart.py        # 加入購物車與件數
-  test_checkout.py    # 結帳主路徑
-conftest.py           # BASE_URL 讀取、browser context
+  helpers/                 # 登入、購物車共用工具
+  test_auth.py             # 登入／登出
+  test_cart.py             # 加入購物車與件數
+  test_cart_badge.py       # 徽章即時更新（D-03）
+  test_checkout.py         # 結帳主路徑
+  test_nav.py              # 導覽列文字（D-01）
+  test_logout_cart.py      # 登出清空購物車（D-04）
+  test_orders_count.py     # 訂單列表件數（D-05）
+  test_coupon_threshold.py # 券門檻邊界（D-08）
+  test_coupon_discount.py  # 折抵金額（D-06）
+  test_phone_validation.py # 手機長度（D-07）
+conftest.py
 .env.example
-pytest.ini            # 截圖／trace／HTML 報告
+pytest.ini
+artifacts/                 # 最近一次 HTML 報告快照
 ```
 
 登入帳號：`demo@minimart.test` / `demo1234`（系統內建測試帳號）。

@@ -8,3 +8,7 @@ test-results/
 blob-report/
 .env
 .DS_Store
+
+# 最新報告快照可提交
+!artifacts/
+!artifacts/**
