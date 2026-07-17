@@ -16,8 +16,8 @@ def login(page: Page, email: str = DEMO_EMAIL, password: str = DEMO_PASSWORD) ->
     page.fill("#login-email", email)
     page.fill("#login-password", password)
     page.click('button[type="submit"]')
-    page.wait_for_url(lambda url: "/login" not in url, timeout=60_000)
-    page.wait_for_selector(".product-grid", timeout=60_000)
+    page.wait_for_url(lambda url: "/login" not in url, timeout=15_000)
+    page.wait_for_selector(".product-grid", timeout=15_000)
 
 
 def logout(page: Page) -> None:
@@ -27,4 +27,4 @@ def logout(page: Page) -> None:
         btn.click()
     else:
         page.get_by_role("link", name="登出").click()
-    page.wait_for_url(re.compile(r".*/login"), timeout=60_000)
+    page.wait_for_url(re.compile(r".*/login"), timeout=15_000)
