@@ -41,8 +41,9 @@ def base_url() -> str:
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args):
-    """忽略自簽／企業憑證問題，方便連線 Tailscale 測試環境。"""
+    """忽略自簽／企業憑證問題，並縮小失敗影片尺寸以減少片頭空檔。"""
     return {
         **browser_context_args,
         "ignore_https_errors": True,
+        "record_video_size": {"width": 800, "height": 600},
     }

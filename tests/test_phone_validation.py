@@ -24,5 +24,4 @@ def test_11_碼手機號碼不可成功下單(page: Page) -> None:
     page.fill("#checkout-address", "台北市測試路 11 號")
     page.get_by_role("button", name="送出訂單").click()
 
-    page.wait_for_timeout(2000)
-    expect(page).not_to_have_url(re.compile(r".*/orders/.+/complete"))
+    expect(page).not_to_have_url(re.compile(r".*/orders/.+/complete"), timeout=5_000)
