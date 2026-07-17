@@ -48,9 +48,11 @@ tests/
   test_cart.py      # 加入購物車與件數
   test_checkout.py  # 結帳主路徑
   ...
-conftest.py         # BASE_URL、失敗截圖／trace
+conftest.py         # BASE_URL 讀取、失敗截圖／trace
 .env.example
 ```
+
+`conftest.py` 會從環境變數（或 `.env`）讀取 `BASE_URL`，並提供給 pytest-playwright 作為 `base_url`。
 
 登入帳號：`demo@minimart.test` / `demo1234`（系統內建測試帳號）。
 
