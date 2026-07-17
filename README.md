@@ -43,7 +43,11 @@ BASE_URL=<網址> pytest -m smoke
 
 ```
 tests/
-  helpers/                 # 登入、購物車共用工具
+  helpers/
+    auth.py                # 登入／登出
+    cart.py                # 購物車（含 API 清空）
+    checkout.py            # 結帳摘要、preview 比對
+    orders.py              # 訂單狀態操作
   test_auth.py             # 登入／登出
   test_cart.py             # 加入購物車與件數
   test_cart_badge.py       # 徽章即時更新（D-03）
@@ -54,6 +58,10 @@ tests/
   test_coupon_threshold.py # 券門檻邊界（D-08）
   test_coupon_discount.py  # 折抵金額（D-06）
   test_phone_validation.py # 手機長度（D-07）
+  test_stock_boundaries.py # 庫存／數量上限（R-3、R-10、R-11）
+  test_pricing_summary.py  # 運費／滿額／應付（R-2、R-4、R-5）
+  test_order_status.py     # 取消／出貨／收貨（R-6）
+  test_return_flow.py      # 退貨審核／退款（R-7、R-16）
 conftest.py
 .env.example
 pytest.ini
@@ -83,3 +91,9 @@ playwright show-trace test-results/<失敗資料夾>/trace.zip
 ```
 
 撰寫 bug report 時建議附上：失敗截圖、trace（或 HTML 報告連結）、對應的 `R-x.y` 規格條文。
+
+## 備註
+
+- 購物車清空改用 `DELETE /api/cart/items/{productId}`，避免 UI 移除殘留造成金額斷言失敗。
+- 金額精確斷言以 `/api/checkout/preview` 為基準，再比對結帳頁 UI 的關鍵欄位（小計／運費／應付）。
+- 若受測環境未提供「取消訂單」或「免運券已用盡」，相關案例會 `pytest.skip` 而非誤判通過。
