@@ -49,17 +49,25 @@ tests/
     cart.py                # 購物車（含 API 清空）
     checkout.py            # 結帳摘要、preview 比對
     orders.py              # 訂單狀態操作
+    products.py            # 庫存讀取（UI／API）
   test_auth.py             # 登入／登出
   test_cart.py             # 加入購物車與件數
   test_cart_badge.py       # 徽章即時更新（D-03）
+  test_cart_extras.py      # 購物車上限／移除／空車（R-11.4～11.9）
   test_checkout.py         # 結帳主路徑
+  test_checkout_validation.py # 收件欄位與送出停用（R-12.6、R-18）
   test_nav.py              # 導覽列文字（D-01）
   test_logout_cart.py      # 登出清空購物車（D-04）
-  test_orders_count.py     # 訂單列表件數（D-05）
+  test_orders_count.py     # 訂單列表件數（D-05／R-14.2）
+  test_order_detail.py     # 訂單詳情五區塊（R-14.4～14.8）
+  test_notifications.py    # 通知內容／出貨退款／已讀（R-8、R-15；D-12）
+  test_my_coupons.py       # 我的優惠券頁（R-17；D-13）
+  test_coupon_ui.py        # 換券／不可用券／折抵列（R-4.10、R-4.11）
   test_coupon_threshold.py # 券門檻邊界（D-08）
   test_coupon_discount.py  # 折抵金額（D-06）
   test_phone_validation.py # 手機長度（D-07）
   test_stock_boundaries.py # 庫存／數量上限（R-3、R-10、R-11）
+  test_stock_effects.py    # 下單扣庫存／取消退款回補（R-3.5、R-3.7；D-09～11）
   test_pricing_summary.py  # 運費／滿額／應付（R-2、R-4、R-5）
   test_order_status.py     # 取消／出貨／收貨（R-6）
   test_return_flow.py      # 退貨審核／退款（R-7、R-16）
