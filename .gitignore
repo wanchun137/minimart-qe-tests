@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.test-results/
+playwright-report/
+test-results/
+blob-report/
+.env
+.DS_Store
