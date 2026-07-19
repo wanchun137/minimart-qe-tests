@@ -68,6 +68,12 @@ tests/
   test_phone_validation.py # 手機長度（D-07）
   test_stock_boundaries.py # 庫存／數量上限（R-3、R-10、R-11）
   test_stock_effects.py    # 下單扣庫存／取消退款回補（R-3.5、R-3.7；D-09～11）
+  test_nav_extras.py       # 通知徽章／登出保留（R-1.5、R-1.8；D-15）
+  test_product_ui.py       # 商品欄位／加車不扣庫存／詳情售完（R-3.1、R-3.3、R-10）
+  test_checkout_extras.py  # 運費位置／完成頁出貨日／處理中（R-5.4、R-12.8、R-13.3；D-16）
+  test_coupon_lifecycle.py # 用券已使用／還券／過期（R-4.12～4.14；D-18、D-19）
+  test_return_extras.py    # 撤銷／再申請／退貨字數（R-7.11～7.12、R-16；D-17）
+  test_validation_extras.py # 空態／重複領取／驗證細節（R-14.3、R-17.3、R-18）
   test_pricing_summary.py  # 運費／滿額／應付（R-2、R-4、R-5）
   test_order_status.py     # 取消／出貨／收貨（R-6）
   test_return_flow.py      # 退貨審核／退款（R-7、R-16）
