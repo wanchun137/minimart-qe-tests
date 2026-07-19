@@ -12,3 +12,7 @@ blob-report/
 # 最新報告快照可提交
 !artifacts/
 !artifacts/**
+
+# 探測暫存與手動執行摘要不進版控
+artifacts/ui_probe.json
+artifacts/LATEST_RUN.md
