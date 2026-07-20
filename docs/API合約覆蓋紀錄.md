@@ -9,14 +9,14 @@
 | OpenAPI operationId | 測試檔案 | 覆蓋狀態 |
 |---------------------|----------|----------|
 | postAuthLogin | `test_validation_and_stock.py` | 已覆蓋（401） |
-| postAuthLogout | `test_validation_and_stock.py` | 已覆蓋（xfail：未清空購物車） |
+| postAuthLogout | `test_validation_and_stock.py` | 已覆蓋（v2.1：登出清空購物車 PASS） |
 | getProducts / getProductsId | `test_validation_and_stock.py` | 已覆蓋（404） |
 | getCart / postCartItems | 各 preview／狀態測試前置 | 已覆蓋 |
 | postCheckoutPreview | `test_checkout_preview.py`、`test_coupon_boundaries.py` | 已覆蓋 |
 | postCheckout | `test_validation_and_stock.py`、`test_order_transitions.py` | 已覆蓋（400／409） |
-| getOrders / getOrdersId | `test_ui_api_cross.py` | 已覆蓋 |
+| getOrders / getOrdersId | `test_ui_api_cross.py`、`test_orders_list.py` | 已覆蓋（getOrders 排序見 D-22 FAIL） |
 | postOrdersIdShip | `test_order_transitions.py` | 已覆蓋（xfail：重複出貨） |
-| postOrdersIdCancel | `test_order_transitions.py` | skip（環境未實作） |
+| postOrdersIdCancel | `test_order_transitions.py` | 已覆蓋（cand2 404 → D-23 FAIL） |
 | postOrdersIdConfirm-receipt | `test_order_transitions.py` | 已覆蓋 |
 | postOrdersIdReturns | `test_order_transitions.py` | 已覆蓋 |
 | postOrdersIdReturnsReview | `test_order_transitions.py` | 已覆蓋 |
