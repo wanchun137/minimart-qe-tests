@@ -1,0 +1,39 @@
+.....x.ss.x.s.........F.........F.....FFsF.s.FFF.....FF.F..FF........... [ 53%]
+s........F.......F..s.....s......F...........FFFssF....F..x...           [100%]
+- Generated html report: file:///Users/chun/Documents/minimart-qe-tests/artifacts/v2.1-regression/report.html -
+=========================== short test summary info ============================
+SKIPPED [1] tests/api/test_coupon_boundaries.py:58: 濾杯單價 480 不適合門檻邊界測試
+SKIPPED [1] tests/api/test_coupon_boundaries.py:76: 免運券不可用
+SKIPPED [1] tests/api/test_order_transitions.py:46: 此環境未實作取消訂單 API
+SKIPPED [1] tests/test_coupon_lifecycle.py:65: 結帳頁無可用免運券，無法驗證免運用後進已使用
+SKIPPED [1] tests/test_coupon_lifecycle.py:189: 此環境未實作取消訂單，無法驗證還券
+SKIPPED [1] tests/test_order_status.py:31: 此環境未實作取消訂單 UI/API
+SKIPPED [1] tests/test_prd_strengthen.py:373: 三個頁籤皆有券，無法驗證空頁籤文案
+SKIPPED [1] tests/test_pricing_summary.py:96: 免運券選項不存在
+SKIPPED [1] tests/test_validation_extras.py:30: 此帳號已有訂單（含內建／歷史單），無法驗證空態
+SKIPPED [1] tests/test_validation_extras.py:44: 此帳號已有通知，無法驗證空態
+XFAIL tests/api/test_coupon_boundaries.py::test_PCT15_小計恰等於門檻_800_可折抵 - 已知缺陷 D-08：小計恰等於門檻時 PCT15 未生效
+XFAIL tests/api/test_order_transitions.py::test_待出貨可出貨_已出貨不可重複出貨 - 後端允許重複出貨，與 openapi CANNOT_SHIP 不符
+XFAIL tests/api/test_validation_and_stock.py::test_手機_11_碼驗證失敗回_400 - 已知缺陷 D-07：後端未驗證 11 碼手機
+FAILED tests/test_cart_badge.py::test_商品列表加入後徽章即時更新為_1[chromium]
+FAILED tests/test_checkout_extras.py::test_送出訂單時按鈕顯示處理中並防重複下單[chromium]
+FAILED tests/test_coupon_discount.py::test_PCT15_對機械式鍵盤的折抵應為_477[chromium]
+FAILED tests/test_coupon_lifecycle.py::test_下單後使用的優惠券變為已使用並記錄完整訂單編號[chromium]
+FAILED tests/test_coupon_lifecycle.py::test_已使用頁籤訂單編號應含MM前綴[chromium]
+FAILED tests/test_coupon_threshold.py::test_小計恰等於門檻時_PCT15_應可使用[chromium]
+FAILED tests/test_coupon_ui.py::test_結帳切換優惠券直接改用後者無確認框[chromium]
+FAILED tests/test_coupon_ui.py::test_選用金額券時優惠券折抵列應顯示折抵[chromium]
+FAILED tests/test_my_coupons.py::test_優惠券頁提供折扣碼領取且可領取_WELCOME50[chromium]
+FAILED tests/test_my_coupons.py::test_無效折扣碼顯示錯誤訊息[chromium] - Asse...
+FAILED tests/test_nav.py::test_第五個目的地文字為我的優惠券[chromium] - Asser...
+FAILED tests/test_notifications.py::test_下單確認通知標題與商品明細對應該筆訂單[chromium]
+FAILED tests/test_notifications.py::test_多品項訂單_通知商品明細行數與內容一致[chromium]
+FAILED tests/test_prd_strengthen.py::test_三種優惠券型別與免運券折抵為零[chromium]
+FAILED tests/test_prd_strengthen.py::test_退貨時間軸含狀態與退款金額不含運費[chromium]
+FAILED tests/test_return_extras.py::test_待審核可撤銷退貨申請[chromium] - Ass...
+FAILED tests/test_stock_effects.py::test_下單後商品列表庫存應立即減少[chromium]
+FAILED tests/test_stock_effects.py::test_取消訂單後庫存應回補[chromium] - Ass...
+FAILED tests/test_stock_effects.py::test_退款完成後庫存應回補[chromium] - Ass...
+FAILED tests/test_validation_extras.py::test_折扣碼重複領取應顯示錯誤[chromium]
+FAILED tests/api/test_validation_and_stock.py::test_登出後購物車清空 - [XPASS...
+21 failed, 100 passed, 10 skipped, 3 xfailed in 1574.14s (0:26:14)

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="21" skipped="13" tests="134" time="1574.131" timestamp="2026-07-20T10:47:06.227359+08:00" hostname="chuns-MacBook-Air.local"><testcase classname="tests.api.test_checkout_preview" name="test_咖啡濾杯兩件_PRD_範例_1" time="2.379" /><testcase classname="tests.api.test_checkout_preview" name="test_機械式鍵盤_PRD_範例_2_滿額折扣與免運" time="1.139" /><testcase classname="tests.api.test_checkout_preview" name="test_機械式鍵盤加滿三千折三百券_PRD_範例_3" time="1.310" /><testcase classname="tests.api.test_checkout_preview" name="test_藍牙耳機_PRD_範例_4_百分比四捨五入" time="1.228" /><testcase classname="tests.api.test_checkout_preview" name="test_七步計價順序恆等式成立" time="4.951" /><testcase classname="tests.api.test_coupon_boundaries" name="test_PCT15_小計恰等於門檻_800_可折抵" time="1.551"><skipped type="pytest.xfail" message="已知缺陷 D-08：小計恰等於門檻時 PCT15 未生效" /></testcase><testcase classname="tests.api.test_coupon_boundaries" name="test_PCT15_小計低於門檻_799_視同無券" time="1.317" /><testcase classname="tests.api.test_coupon_boundaries" name="test_SAVE100_滿千門檻邊界" time="0.822"><skipped type="pytest.skip" message="濾杯單價 480 不適合門檻邊界測試">/Users/chun/Documents/minimart-qe-tests/tests/api/test_coupon_boundaries.py:58: 濾杯單價 480 不適合門檻邊界測試</skipped></testcase><testcase classname="tests.api.test_coupon_boundaries" name="test_免運券不論金額運費為零" time="0.653"><skipped type="pytest.skip" message="免運券不可用">/Users/chun/Documents/minimart-qe-tests/tests/api/test_coupon_boundaries.py:76: 免運券不可用</skipped></testcase><testcase classname="tests.api.test_coupon_boundaries" name="test_無效券碼靜默忽略" time="1.151" /><testcase classname="tests.api.test_order_transitions" name="test_待出貨可出貨_已出貨不可重複出貨" time="2.125"><skipped type="pytest.xfail" message="後端允許重複出貨，與 openapi CANNOT_SHIP 不符" /></testcase><testcase classname="tests.api.test_order_transitions" name="test_已出貨可確認收貨_待出貨不可" time="2.164" /><testcase classname="tests.api.test_order_transitions" name="test_取消訂單_合法與非法狀態" time="1.597"><skipped type="pytest.skip" message="此環境未實作取消訂單 API">/Users/chun/Documents/minimart-qe-tests/tests/api/test_order_transitions.py:46: 此環境未實作取消訂單 API</skipped></testcase><testcase classname="tests.api.test_order_transitions" name="test_退貨申請_合法與非法狀態" time="2.752" /><testcase classname="tests.api.test_order_transitions" name="test_退貨審核_僅待審核可執行" time="2.514" /><testcase classname="tests.api.test_ui_api_cross" name="test_結帳頁金額與_preview_API_一致[chromium]" time="11.404" /><testcase classname="tests.api.test_ui_api_cross" name="test_下單後訂單詳情金額快照與_preview_一致[chromium]" time="12.371" /><testcase classname="tests.test_auth" name="test_正確帳密可登入並進入商品列表[chromium]" time="8.058" /><testcase classname="tests.test_auth" name="test_錯誤密碼顯示帳號或密碼錯誤[chromium]" time="6.933" /><testcase classname="tests.test_auth" name="test_登出後回到登入頁[chromium]" time="8.198" /><testcase classname="tests.test_cart" name="test_加入商品後購物車頁可見該品項且件數正確[chromium]" time="9.780" /><testcase classname="tests.test_cart" name="test_同一商品再加入一次件數累加為_2[chromium]" time="11.914" /><testcase classname="tests.test_cart_badge" name="test_商品列表加入後徽章即時更新為_1[chromium]" time="15.366"><failure message="AssertionError: Locator expected to have text '1'&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_have_text&quot; with timeout 5000ms&#10;  - waiting for get_by_test_id(&quot;cart-badge&quot;)&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 84&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;商品&quot; [level=1]&#10;  - link &quot;手沖咖啡濾杯 手沖咖啡濾杯&quot;:&#10;    - /url: /products/1&#10;    - img &quot;手沖咖啡濾杯&quot;&#10;    - paragraph: 手沖咖啡濾杯&#10;  - paragraph: 廚房&#10;  - paragraph: NT$480&#10;  - paragraph: 剩餘 12 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;不鏽鋼保溫瓶 不鏽鋼保溫瓶&quot;:&#10;    - /url: /products/2&#10;    - img &quot;不鏽鋼保溫瓶&quot;&#10;    - paragraph: 不鏽鋼保溫瓶&#10;  - paragraph: 廚房&#10;  - paragraph: NT$690&#10;  - paragraph: 剩餘 8 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;極簡皮革錢包 極簡皮革錢包&quot;:&#10;    - /url: /products/3&#10;    - img &quot;極簡皮革錢包&quot;&#10;    - paragraph: 極簡皮革錢包&#10;  - paragraph: 配件&#10;  - paragraph: NT$1,280&#10;  - paragraph: 剩餘 5 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;無線藍牙耳機 無線藍牙耳機&quot;:&#10;    - /url: /products/4&#10;    - img &quot;無線藍牙耳機&quot;&#10;    - paragraph: 無線藍牙耳機&#10;  - paragraph: 3C&#10;  - paragraph: NT$2,150&#10;  - paragraph: 剩餘 3 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;純棉素色 T 恤 純棉素色 T 恤&quot;:&#10;    - /url: /products/5&#10;    - img &quot;純棉素色 T 恤&quot;&#10;    - paragraph: 純棉素色 T 恤&#10;  - paragraph: 服飾&#10;  - paragraph: NT$400&#10;  - paragraph: 剩餘 20 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;陶瓷馬克杯 陶瓷馬克杯&quot;:&#10;    - /url: /products/6&#10;    - img &quot;陶瓷馬克杯&quot;&#10;    - paragraph: 陶瓷馬克杯&#10;  - paragraph: 廚房&#10;  - paragraph: NT$260&#10;  - paragraph: 已售完&#10;  - button &quot;加入購物車&quot; [disabled]&#10;  - link &quot;折疊露營椅 折疊露營椅&quot;:&#10;    - /url: /products/7&#10;    - img &quot;折疊露營椅&quot;&#10;    - paragraph: 折疊露營椅&#10;  - paragraph: 戶外&#10;  - paragraph: NT$1,020&#10;  - paragraph: 剩餘 1 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;香氛蠟燭禮盒 香氛蠟燭禮盒&quot;:&#10;    - /url: /products/8&#10;    - img &quot;香氛蠟燭禮盒&quot;&#10;    - paragraph: 香氛蠟燭禮盒&#10;  - paragraph: 居家&#10;  - paragraph: NT$860&#10;  - paragraph: 剩餘 6 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;機械式鍵盤 機械式鍵盤&quot;:&#10;    - /url: /products/9&#10;    - img &quot;機械式鍵盤&quot;&#10;    - paragraph: 機械式鍵盤&#10;  - paragraph: 3C&#10;  - paragraph: NT$3,180&#10;  - paragraph: 剩餘 4 件&#10;  - button &quot;加入購物車&quot;&#10;  - text: MiniMart 保證所有商品皆為正品">E   AssertionError: Locator expected to have text '1'
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_have_text" with timeout 5000ms
+      - waiting for get_by_test_id("cart-badge")
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 84":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "商品" [level=1]
+      - link "手沖咖啡濾杯 手沖咖啡濾杯":
+        - /url: /products/1
+        - img "手沖咖啡濾杯"
+        - paragraph: 手沖咖啡濾杯
+      - paragraph: 廚房
+      - paragraph: NT$480
+      - paragraph: 剩餘 12 件
+      - button "加入購物車"
+      - link "不鏽鋼保溫瓶 不鏽鋼保溫瓶":
+        - /url: /products/2
+        - img "不鏽鋼保溫瓶"
+        - paragraph: 不鏽鋼保溫瓶
+      - paragraph: 廚房
+      - paragraph: NT$690
+      - paragraph: 剩餘 8 件
+      - button "加入購物車"
+      - link "極簡皮革錢包 極簡皮革錢包":
+        - /url: /products/3
+        - img "極簡皮革錢包"
+        - paragraph: 極簡皮革錢包
+      - paragraph: 配件
+      - paragraph: NT$1,280
+      - paragraph: 剩餘 5 件
+      - button "加入購物車"
+      - link "無線藍牙耳機 無線藍牙耳機":
+        - /url: /products/4
+        - img "無線藍牙耳機"
+        - paragraph: 無線藍牙耳機
+      - paragraph: 3C
+      - paragraph: NT$2,150
+      - paragraph: 剩餘 3 件
+      - button "加入購物車"
+      - link "純棉素色 T 恤 純棉素色 T 恤":
+        - /url: /products/5
+        - img "純棉素色 T 恤"
+        - paragraph: 純棉素色 T 恤
+      - paragraph: 服飾
+      - paragraph: NT$400
+      - paragraph: 剩餘 20 件
+      - button "加入購物車"
+      - link "陶瓷馬克杯 陶瓷馬克杯":
+        - /url: /products/6
+        - img "陶瓷馬克杯"
+        - paragraph: 陶瓷馬克杯
+      - paragraph: 廚房
+      - paragraph: NT$260
+      - paragraph: 已售完
+      - button "加入購物車" [disabled]
+      - link "折疊露營椅 折疊露營椅":
+        - /url: /products/7
+        - img "折疊露營椅"
+        - paragraph: 折疊露營椅
+      - paragraph: 戶外
+      - paragraph: NT$1,020
+      - paragraph: 剩餘 1 件
+      - button "加入購物車"
+      - link "香氛蠟燭禮盒 香氛蠟燭禮盒":
+        - /url: /products/8
+        - img "香氛蠟燭禮盒"
+        - paragraph: 香氛蠟燭禮盒
+      - paragraph: 居家
+      - paragraph: NT$860
+      - paragraph: 剩餘 6 件
+      - button "加入購物車"
+      - link "機械式鍵盤 機械式鍵盤":
+        - /url: /products/9
+        - img "機械式鍵盤"
+        - paragraph: 機械式鍵盤
+      - paragraph: 3C
+      - paragraph: NT$3,180
+      - paragraph: 剩餘 4 件
+      - button "加入購物車"
+      - text: MiniMart 保證所有商品皆為正品</failure></testcase><testcase classname="tests.test_cart_extras" name="test_同一商品購物車數量上限為_5[chromium]" time="14.172" /><testcase classname="tests.test_cart_extras" name="test_移除商品需確認後列消失[chromium]" time="11.251" /><testcase classname="tests.test_cart_extras" name="test_空購物車顯示文案且結帳停用[chromium]" time="8.057" /><testcase classname="tests.test_cart_extras" name="test_購物車頁只顯示商品小計[chromium]" time="10.554" /><testcase classname="tests.test_checkout" name="test_從購物車進入結帳並完成下單[chromium]" time="13.459" /><testcase classname="tests.test_checkout_extras" name="test_購物車頁不顯示運費[chromium]" time="12.519" /><testcase classname="tests.test_checkout_extras" name="test_結帳摘要金額無小數點[chromium]" time="10.786" /><testcase classname="tests.test_checkout_extras" name="test_折扣總額不得使折扣後商品金額為負[chromium]" time="10.007" /><testcase classname="tests.test_checkout_extras" name="test_空購物車直開結帳導向購物車[chromium]" time="10.478" /><testcase classname="tests.test_checkout_extras" name="test_送出訂單時按鈕顯示處理中並防重複下單[chromium]" time="19.508"><failure message="AssertionError: 送出後應顯示「處理中…」或按鈕停用（R-12.8／D-16）&#10;assert False">E   AssertionError: 送出後應顯示「處理中…」或按鈕停用（R-12.8／D-16）
+    assert False</failure></testcase><testcase classname="tests.test_checkout_extras" name="test_訂單完成頁預計出貨日為下單日加兩天[chromium]" time="12.009" /><testcase classname="tests.test_checkout_validation" name="test_收件欄位未填時送出訂單停用[chromium]" time="11.934" /><testcase classname="tests.test_checkout_validation" name="test_姓名空白不可啟用送出[chromium]" time="10.426" /><testcase classname="tests.test_checkout_validation" name="test_地址過短不可啟用送出[chromium]" time="10.893" /><testcase classname="tests.test_checkout_validation" name="test_姓名超過二十字不可啟用送出[chromium]" time="10.537" /><testcase classname="tests.test_coupon_discount" name="test_PCT15_對機械式鍵盤的折抵應為_477[chromium]" time="16.305"><failure message="AssertionError: Locator expected to contain text 're.compile('NT\\$\\s*477')'&#10;Actual value: 商品小計NT$3,180滿額折扣−NT$453優惠券折抵−NT$159運費NT$0應付金額NT$2,568送出訂單 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.checkout-sidebar&quot;)&#10;    3 × locator resolved to &lt;div class=&quot;checkout-sidebar&quot;&gt;…&lt;/div&gt;&#10;      - unexpected value &quot;商品小計NT$3,180滿額折扣NT$0優惠券折抵−NT$159運費NT$0應付金額NT$3,021送出訂單&quot;&#10;    11 × locator resolved to &lt;div class=&quot;checkout-sidebar&quot;&gt;…&lt;/div&gt;&#10;       - unexpected value &quot;商品小計NT$3,180滿額折扣−NT$453優惠券折抵−NT$159運費NT$0應付金額NT$2,568送出訂單&quot;&#10;&#10;Aria snapshot:&#10;- text: 商品小計 NT$3,180 滿額折扣 −NT$453 優惠券折抵 −NT$159 運費 NT$0 應付金額 NT$2,568&#10;- button &quot;送出訂單&quot; [disabled]">E   AssertionError: Locator expected to contain text 're.compile('NT\\$\\s*477')'
+    Actual value: 商品小計NT$3,180滿額折扣−NT$453優惠券折抵−NT$159運費NT$0應付金額NT$2,568送出訂單 
+    Call log:
+      - Expect "to_contain_text" with timeout 5000ms
+      - waiting for locator(".checkout-sidebar")
+        3 × locator resolved to &lt;div class="checkout-sidebar"&gt;…&lt;/div&gt;
+          - unexpected value "商品小計NT$3,180滿額折扣NT$0優惠券折抵−NT$159運費NT$0應付金額NT$3,021送出訂單"
+        11 × locator resolved to &lt;div class="checkout-sidebar"&gt;…&lt;/div&gt;
+           - unexpected value "商品小計NT$3,180滿額折扣−NT$453優惠券折抵−NT$159運費NT$0應付金額NT$2,568送出訂單"
+    
+    Aria snapshot:
+    - text: 商品小計 NT$3,180 滿額折扣 −NT$453 優惠券折抵 −NT$159 運費 NT$0 應付金額 NT$2,568
+    - button "送出訂單" [disabled]</failure></testcase><testcase classname="tests.test_coupon_lifecycle" name="test_下單後使用的優惠券變為已使用並記錄完整訂單編號[chromium]" time="13.709"><failure message="AssertionError: 用券下單後「新人小禮券」仍在可使用、未進入已使用（R-4.12）">E   AssertionError: 用券下單後「新人小禮券」仍在可使用、未進入已使用（R-4.12）</failure></testcase><testcase classname="tests.test_coupon_lifecycle" name="test_免運券下單後應進入已使用[chromium]" time="10.939"><skipped type="pytest.skip" message="結帳頁無可用免運券，無法驗證免運用後進已使用">/Users/chun/Documents/minimart-qe-tests/tests/test_coupon_lifecycle.py:65: 結帳頁無可用免運券，無法驗證免運用後進已使用</skipped></testcase><testcase classname="tests.test_coupon_lifecycle" name="test_已使用頁籤訂單編號應含MM前綴[chromium]" time="9.454"><failure message="AssertionError: 已使用券訂單編號缺少 MM- 前綴（D-18）：['20260720-0019']&#10;assert not ['20260720-0019']">E   AssertionError: 已使用券訂單編號缺少 MM- 前綴（D-18）：['20260720-0019']
+    assert not ['20260720-0019']</failure></testcase><testcase classname="tests.test_coupon_lifecycle" name="test_退款後優惠券應返還為未使用[chromium]" time="22.562" /><testcase classname="tests.test_coupon_lifecycle" name="test_取消訂單後優惠券應返還[chromium]" time="13.119"><skipped type="pytest.skip" message="此環境未實作取消訂單，無法驗證還券">/Users/chun/Documents/minimart-qe-tests/tests/test_coupon_lifecycle.py:189: 此環境未實作取消訂單，無法驗證還券</skipped></testcase><testcase classname="tests.test_coupon_lifecycle" name="test_已過期券不可在結帳選用[chromium]" time="10.511" /><testcase classname="tests.test_coupon_threshold" name="test_小計恰等於門檻時_PCT15_應可使用[chromium]" time="18.192"><failure message="AssertionError: Locator expected to have count '0'&#10;Actual value: 1 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for get_by_text(&quot;未達使用門檻 NT$800&quot;)&#10;    14 × locator resolved to 1 element&#10;       - unexpected value &quot;1&quot;">E   AssertionError: Locator expected to have count '0'
+    Actual value: 1 
+    Call log:
+      - Expect "to_have_count" with timeout 5000ms
+      - waiting for get_by_text("未達使用門檻 NT$800")
+        14 × locator resolved to 1 element
+           - unexpected value "1"</failure></testcase><testcase classname="tests.test_coupon_ui" name="test_結帳切換優惠券直接改用後者無確認框[chromium]" time="42.888"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for get_by_role(&quot;radio&quot;, name=re.compile(r&quot;免運券&quot;))">E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for get_by_role("radio", name=re.compile(r"免運券"))</failure></testcase><testcase classname="tests.test_coupon_ui" name="test_選用金額券時優惠券折抵列應顯示折抵[chromium]" time="16.093"><failure message="AssertionError: Locator expected to contain text '20'&#10;Actual value: NT$0 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.summary-row&quot;).filter(has=locator(&quot;.summary-row-label&quot;).filter(has_text=&quot;優惠券折抵&quot;)).locator(&quot;.summary-row-value&quot;)&#10;    14 × locator resolved to &lt;span class=&quot;summary-row-value&quot; data-testid=&quot;summary-row-value&quot;&gt;NT$0&lt;/span&gt;&#10;       - unexpected value &quot;NT$0&quot;&#10;&#10;Aria snapshot:&#10;- text: NT$0">E   AssertionError: Locator expected to contain text '20'
+    Actual value: NT$0 
+    Call log:
+      - Expect "to_contain_text" with timeout 5000ms
+      - waiting for locator(".summary-row").filter(has=locator(".summary-row-label").filter(has_text="優惠券折抵")).locator(".summary-row-value")
+        14 × locator resolved to &lt;span class="summary-row-value" data-testid="summary-row-value"&gt;NT$0&lt;/span&gt;
+           - unexpected value "NT$0"
+    
+    Aria snapshot:
+    - text: NT$0</failure></testcase><testcase classname="tests.test_coupon_ui" name="test_未達門檻券顯示原因且不可點選[chromium]" time="10.452" /><testcase classname="tests.test_logout_cart" name="test_登出後再登入購物車應為空[chromium]" time="12.413" /><testcase classname="tests.test_my_coupons" name="test_優惠券頁有三頁籤與卡片必要欄位[chromium]" time="7.692" /><testcase classname="tests.test_my_coupons" name="test_門檻為零的券顯示無最低消費[chromium]" time="8.350" /><testcase classname="tests.test_my_coupons" name="test_已過期頁籤可見舊版折五十券[chromium]" time="9.139" /><testcase classname="tests.test_my_coupons" name="test_優惠券頁提供折扣碼領取且可領取_WELCOME50[chromium]" time="13.588"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;input[name*='code' i], #coupon-code, #redeem-code&quot;).first&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 94&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;我的優惠券&quot; [level=1]&#10;  - button &quot;可使用 (4)&quot;&#10;  - button &quot;已使用 (1)&quot;&#10;  - button &quot;已過期 (1)&quot;&#10;  - text: 新人小禮券 未使用 券碼 NEWBIE20 NT$20 無最低消費 到期日 2027-04-16 滿千折百券 未使用 券碼 SAVE100 NT$100 滿 NT$1,000 可用 到期日 2027-01-16 滿三千折三百券 未使用 券碼 SAVE300 NT$300 滿 NT$3,000 可用 到期日 2027-01-16 全站 85 折券 未使用 券碼 PCT15 15% 滿 NT$800 可用 到期日 2027-01-16">E   AssertionError: Locator expected to be visible
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_be_visible" with timeout 5000ms
+      - waiting for locator("input[name*='code' i], #coupon-code, #redeem-code").first
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 94":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "我的優惠券" [level=1]
+      - button "可使用 (4)"
+      - button "已使用 (1)"
+      - button "已過期 (1)"
+      - text: 新人小禮券 未使用 券碼 NEWBIE20 NT$20 無最低消費 到期日 2027-04-16 滿千折百券 未使用 券碼 SAVE100 NT$100 滿 NT$1,000 可用 到期日 2027-01-16 滿三千折三百券 未使用 券碼 SAVE300 NT$300 滿 NT$3,000 可用 到期日 2027-01-16 全站 85 折券 未使用 券碼 PCT15 15% 滿 NT$800 可用 到期日 2027-01-16</failure></testcase><testcase classname="tests.test_my_coupons" name="test_無效折扣碼顯示錯誤訊息[chromium]" time="13.664"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;input[placeholder*='折扣'], input[name*='code' i], #coupon-code, #redeem-code&quot;).first&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 94&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;我的優惠券&quot; [level=1]&#10;  - button &quot;可使用 (4)&quot;&#10;  - button &quot;已使用 (1)&quot;&#10;  - button &quot;已過期 (1)&quot;&#10;  - text: 新人小禮券 未使用 券碼 NEWBIE20 NT$20 無最低消費 到期日 2027-04-16 滿千折百券 未使用 券碼 SAVE100 NT$100 滿 NT$1,000 可用 到期日 2027-01-16 滿三千折三百券 未使用 券碼 SAVE300 NT$300 滿 NT$3,000 可用 到期日 2027-01-16 全站 85 折券 未使用 券碼 PCT15 15% 滿 NT$800 可用 到期日 2027-01-16">E   AssertionError: Locator expected to be visible
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_be_visible" with timeout 5000ms
+      - waiting for locator("input[placeholder*='折扣'], input[name*='code' i], #coupon-code, #redeem-code").first
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 94":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "我的優惠券" [level=1]
+      - button "可使用 (4)"
+      - button "已使用 (1)"
+      - button "已過期 (1)"
+      - text: 新人小禮券 未使用 券碼 NEWBIE20 NT$20 無最低消費 到期日 2027-04-16 滿千折百券 未使用 券碼 SAVE100 NT$100 滿 NT$1,000 可用 到期日 2027-01-16 滿三千折三百券 未使用 券碼 SAVE300 NT$300 滿 NT$3,000 可用 到期日 2027-01-16 全站 85 折券 未使用 券碼 PCT15 15% 滿 NT$800 可用 到期日 2027-01-16</failure></testcase><testcase classname="tests.test_my_coupons" name="test_我的優惠券頁不可套用優惠券[chromium]" time="8.800" /><testcase classname="tests.test_nav" name="test_第五個目的地文字為我的優惠券[chromium]" time="12.141"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for get_by_role(&quot;link&quot;, name=&quot;我的優惠券&quot;)&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 94&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;商品&quot; [level=1]&#10;  - link &quot;手沖咖啡濾杯 手沖咖啡濾杯&quot;:&#10;    - /url: /products/1&#10;    - img &quot;手沖咖啡濾杯&quot;&#10;    - paragraph: 手沖咖啡濾杯&#10;  - paragraph: 廚房&#10;  - paragraph: NT$480&#10;  - paragraph: 剩餘 12 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;不鏽鋼保溫瓶 不鏽鋼保溫瓶&quot;:&#10;    - /url: /products/2&#10;    - img &quot;不鏽鋼保溫瓶&quot;&#10;    - paragraph: 不鏽鋼保溫瓶&#10;  - paragraph: 廚房&#10;  - paragraph: NT$690&#10;  - paragraph: 剩餘 8 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;極簡皮革錢包 極簡皮革錢包&quot;:&#10;    - /url: /products/3&#10;    - img &quot;極簡皮革錢包&quot;&#10;    - paragraph: 極簡皮革錢包&#10;  - paragraph: 配件&#10;  - paragraph: NT$1,280&#10;  - paragraph: 剩餘 5 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;無線藍牙耳機 無線藍牙耳機&quot;:&#10;    - /url: /products/4&#10;    - img &quot;無線藍牙耳機&quot;&#10;    - paragraph: 無線藍牙耳機&#10;  - paragraph: 3C&#10;  - paragraph: NT$2,150&#10;  - paragraph: 剩餘 3 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;純棉素色 T 恤 純棉素色 T 恤&quot;:&#10;    - /url: /products/5&#10;    - img &quot;純棉素色 T 恤&quot;&#10;    - paragraph: 純棉素色 T 恤&#10;  - paragraph: 服飾&#10;  - paragraph: NT$400&#10;  - paragraph: 剩餘 20 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;陶瓷馬克杯 陶瓷馬克杯&quot;:&#10;    - /url: /products/6&#10;    - img &quot;陶瓷馬克杯&quot;&#10;    - paragraph: 陶瓷馬克杯&#10;  - paragraph: 廚房&#10;  - paragraph: NT$260&#10;  - paragraph: 已售完&#10;  - button &quot;加入購物車&quot; [disabled]&#10;  - link &quot;折疊露營椅 折疊露營椅&quot;:&#10;    - /url: /products/7&#10;    - img &quot;折疊露營椅&quot;&#10;    - paragraph: 折疊露營椅&#10;  - paragraph: 戶外&#10;  - paragraph: NT$1,020&#10;  - paragraph: 剩餘 1 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;香氛蠟燭禮盒 香氛蠟燭禮盒&quot;:&#10;    - /url: /products/8&#10;    - img &quot;香氛蠟燭禮盒&quot;&#10;    - paragraph: 香氛蠟燭禮盒&#10;  - paragraph: 居家&#10;  - paragraph: NT$860&#10;  - paragraph: 剩餘 6 件&#10;  - button &quot;加入購物車&quot;&#10;  - link &quot;機械式鍵盤 機械式鍵盤&quot;:&#10;    - /url: /products/9&#10;    - img &quot;機械式鍵盤&quot;&#10;    - paragraph: 機械式鍵盤&#10;  - paragraph: 3C&#10;  - paragraph: NT$3,180&#10;  - paragraph: 剩餘 4 件&#10;  - button &quot;加入購物車&quot;&#10;  - text: MiniMart 保證所有商品皆為正品">E   AssertionError: Locator expected to be visible
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_be_visible" with timeout 5000ms
+      - waiting for get_by_role("link", name="我的優惠券")
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 94":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "商品" [level=1]
+      - link "手沖咖啡濾杯 手沖咖啡濾杯":
+        - /url: /products/1
+        - img "手沖咖啡濾杯"
+        - paragraph: 手沖咖啡濾杯
+      - paragraph: 廚房
+      - paragraph: NT$480
+      - paragraph: 剩餘 12 件
+      - button "加入購物車"
+      - link "不鏽鋼保溫瓶 不鏽鋼保溫瓶":
+        - /url: /products/2
+        - img "不鏽鋼保溫瓶"
+        - paragraph: 不鏽鋼保溫瓶
+      - paragraph: 廚房
+      - paragraph: NT$690
+      - paragraph: 剩餘 8 件
+      - button "加入購物車"
+      - link "極簡皮革錢包 極簡皮革錢包":
+        - /url: /products/3
+        - img "極簡皮革錢包"
+        - paragraph: 極簡皮革錢包
+      - paragraph: 配件
+      - paragraph: NT$1,280
+      - paragraph: 剩餘 5 件
+      - button "加入購物車"
+      - link "無線藍牙耳機 無線藍牙耳機":
+        - /url: /products/4
+        - img "無線藍牙耳機"
+        - paragraph: 無線藍牙耳機
+      - paragraph: 3C
+      - paragraph: NT$2,150
+      - paragraph: 剩餘 3 件
+      - button "加入購物車"
+      - link "純棉素色 T 恤 純棉素色 T 恤":
+        - /url: /products/5
+        - img "純棉素色 T 恤"
+        - paragraph: 純棉素色 T 恤
+      - paragraph: 服飾
+      - paragraph: NT$400
+      - paragraph: 剩餘 20 件
+      - button "加入購物車"
+      - link "陶瓷馬克杯 陶瓷馬克杯":
+        - /url: /products/6
+        - img "陶瓷馬克杯"
+        - paragraph: 陶瓷馬克杯
+      - paragraph: 廚房
+      - paragraph: NT$260
+      - paragraph: 已售完
+      - button "加入購物車" [disabled]
+      - link "折疊露營椅 折疊露營椅":
+        - /url: /products/7
+        - img "折疊露營椅"
+        - paragraph: 折疊露營椅
+      - paragraph: 戶外
+      - paragraph: NT$1,020
+      - paragraph: 剩餘 1 件
+      - button "加入購物車"
+      - link "香氛蠟燭禮盒 香氛蠟燭禮盒":
+        - /url: /products/8
+        - img "香氛蠟燭禮盒"
+        - paragraph: 香氛蠟燭禮盒
+      - paragraph: 居家
+      - paragraph: NT$860
+      - paragraph: 剩餘 6 件
+      - button "加入購物車"
+      - link "機械式鍵盤 機械式鍵盤":
+        - /url: /products/9
+        - img "機械式鍵盤"
+        - paragraph: 機械式鍵盤
+      - paragraph: 3C
+      - paragraph: NT$3,180
+      - paragraph: 剩餘 4 件
+      - button "加入購物車"
+      - text: MiniMart 保證所有商品皆為正品</failure></testcase><testcase classname="tests.test_nav_extras" name="test_通知中心徽章反映未讀則數且為零時不顯示數字[chromium]" time="14.184" /><testcase classname="tests.test_nav_extras" name="test_登出再登入後訂單與通知仍保留[chromium]" time="16.012" /><testcase classname="tests.test_notifications" name="test_下單確認通知標題與商品明細對應該筆訂單[chromium]" time="17.062"><failure message="AssertionError: Locator expected to contain text '手沖咖啡濾杯 × 3'&#10;Actual value: 下單時間 2026-07-01 10:15&#10;手沖咖啡濾杯 × 2&#10;應付金額 NT$1,020&#10;收件人 測試收件人 1 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for get_by_test_id(&quot;notification-row&quot;).filter(has_text=&quot;訂單 MM-20260720-0072 已成立&quot;).first.locator(&quot;[data-testid^='notification-body']&quot;)&#10;    14 × locator resolved to &lt;p class=&quot;notification-body&quot; data-testid=&quot;notification-body-155&quot;&gt;下單時間 2026-07-01 10:15↵手沖咖啡濾杯 × 2↵應付金額 NT$1,020↵收件…&lt;/p&gt;&#10;       - unexpected value &quot;下單時間 2026-07-01 10:15&#10;手沖咖啡濾杯 × 2&#10;應付金額 NT$1,020&#10;收件人 測試收件人 1&quot;&#10;&#10;Aria snapshot:&#10;- paragraph: 下單時間 2026-07-01 10:15 手沖咖啡濾杯 × 2 應付金額 NT$1,020 收件人 測試收件人 1">E   AssertionError: Locator expected to contain text '手沖咖啡濾杯 × 3'
+    Actual value: 下單時間 2026-07-01 10:15
+    手沖咖啡濾杯 × 2
+    應付金額 NT$1,020
+    收件人 測試收件人 1 
+    Call log:
+      - Expect "to_contain_text" with timeout 5000ms
+      - waiting for get_by_test_id("notification-row").filter(has_text="訂單 MM-20260720-0072 已成立").first.locator("[data-testid^='notification-body']")
+        14 × locator resolved to &lt;p class="notification-body" data-testid="notification-body-155"&gt;下單時間 2026-07-01 10:15↵手沖咖啡濾杯 × 2↵應付金額 NT$1,020↵收件…&lt;/p&gt;
+           - unexpected value "下單時間 2026-07-01 10:15
+    手沖咖啡濾杯 × 2
+    應付金額 NT$1,020
+    收件人 測試收件人 1"
+    
+    Aria snapshot:
+    - paragraph: 下單時間 2026-07-01 10:15 手沖咖啡濾杯 × 2 應付金額 NT$1,020 收件人 測試收件人 1</failure></testcase><testcase classname="tests.test_notifications" name="test_多品項訂單_通知商品明細行數與內容一致[chromium]" time="18.316"><failure message="AssertionError: Locator expected to contain text '不鏽鋼保溫瓶 × 1'&#10;Actual value: 下單時間 2026-07-01 10:15&#10;手沖咖啡濾杯 × 2&#10;應付金額 NT$1,020&#10;收件人 測試收件人 1 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for get_by_test_id(&quot;notification-row&quot;).filter(has_text=&quot;訂單 MM-20260720-0073 已成立&quot;).first.locator(&quot;[data-testid^='notification-body']&quot;)&#10;    14 × locator resolved to &lt;p class=&quot;notification-body&quot; data-testid=&quot;notification-body-156&quot;&gt;下單時間 2026-07-01 10:15↵手沖咖啡濾杯 × 2↵應付金額 NT$1,020↵收件…&lt;/p&gt;&#10;       - unexpected value &quot;下單時間 2026-07-01 10:15&#10;手沖咖啡濾杯 × 2&#10;應付金額 NT$1,020&#10;收件人 測試收件人 1&quot;&#10;&#10;Aria snapshot:&#10;- paragraph: 下單時間 2026-07-01 10:15 手沖咖啡濾杯 × 2 應付金額 NT$1,020 收件人 測試收件人 1">E   AssertionError: Locator expected to contain text '不鏽鋼保溫瓶 × 1'
+    Actual value: 下單時間 2026-07-01 10:15
+    手沖咖啡濾杯 × 2
+    應付金額 NT$1,020
+    收件人 測試收件人 1 
+    Call log:
+      - Expect "to_contain_text" with timeout 5000ms
+      - waiting for get_by_test_id("notification-row").filter(has_text="訂單 MM-20260720-0073 已成立").first.locator("[data-testid^='notification-body']")
+        14 × locator resolved to &lt;p class="notification-body" data-testid="notification-body-156"&gt;下單時間 2026-07-01 10:15↵手沖咖啡濾杯 × 2↵應付金額 NT$1,020↵收件…&lt;/p&gt;
+           - unexpected value "下單時間 2026-07-01 10:15
+    手沖咖啡濾杯 × 2
+    應付金額 NT$1,020
+    收件人 測試收件人 1"
+    
+    Aria snapshot:
+    - paragraph: 下單時間 2026-07-01 10:15 手沖咖啡濾杯 × 2 應付金額 NT$1,020 收件人 測試收件人 1</failure></testcase><testcase classname="tests.test_notifications" name="test_出貨後產生出貨通知[chromium]" time="14.701" /><testcase classname="tests.test_notifications" name="test_退貨申請與退款完成產生對應通知[chromium]" time="20.787" /><testcase classname="tests.test_notifications" name="test_點擊通知後轉為已讀且未讀數減少[chromium]" time="14.659" /><testcase classname="tests.test_notifications" name="test_全部標為已讀後未讀歸零[chromium]" time="15.662" /><testcase classname="tests.test_order_detail" name="test_訂單詳情五區塊與商品收件資訊正確[chromium]" time="12.149" /><testcase classname="tests.test_order_note" name="test_結帳頁訂單備註區塊位置標籤與字數[chromium]" time="11.624" /><testcase classname="tests.test_order_note" name="test_備註留空可送出且詳情顯示無備註[chromium]" time="13.171" /><testcase classname="tests.test_order_note" name="test_填寫備註可在詳情查看且保留換行[chromium]" time="15.712" /><testcase classname="tests.test_order_note" name="test_僅空白備註視為未填並去除前後空白後儲存[chromium]" time="18.559" /><testcase classname="tests.test_order_note" name="test_備註超過一百字顯示錯誤並停用送出[chromium]" time="14.703" /><testcase classname="tests.test_order_note" name="test_備註前後空白超過一百時以_trim_後長度驗證[chromium]" time="10.997" /><testcase classname="tests.test_order_status" name="test_待出貨訂單可取消[chromium]" time="13.707"><skipped type="pytest.skip" message="此環境未實作取消訂單 UI/API">/Users/chun/Documents/minimart-qe-tests/tests/test_order_status.py:31: 此環境未實作取消訂單 UI/API</skipped></testcase><testcase classname="tests.test_order_status" name="test_待出貨訂單可模擬出貨[chromium]" time="13.142" /><testcase classname="tests.test_order_status" name="test_已出貨訂單可確認收貨[chromium]" time="14.622" /><testcase classname="tests.test_orders_count" name="test_單一品項購買_3_件時列表顯示_3_件[chromium]" time="17.511" /><testcase classname="tests.test_phone_validation" name="test_11_碼手機號碼不可成功下單[chromium]" time="9.830" /><testcase classname="tests.test_prd_strengthen" name="test_未登入直開受保護頁面導向登入[chromium]" time="7.506" /><testcase classname="tests.test_prd_strengthen" name="test_商品單價為NT且為整數無小數[chromium]" time="9.554" /><testcase classname="tests.test_prd_strengthen" name="test_折扣總額與折扣後商品金額公式[chromium]" time="10.141" /><testcase classname="tests.test_prd_strengthen" name="test_庫存為非負整數且列表售完文案[chromium]" time="8.537" /><testcase classname="tests.test_prd_strengthen" name="test_三種優惠券型別與免運券折抵為零[chromium]" time="21.416"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 10000ms&#10;  - waiting for locator(&quot;label.coupon-option&quot;).filter(has_text=&quot;免運券&quot;).first&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車 1&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 13&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;結帳&quot; [level=1]&#10;  - heading &quot;收件資訊&quot; [level=2]&#10;  - text: 收件人姓名&#10;  - textbox &quot;收件人姓名&quot;&#10;  - text: 手機號碼&#10;  - textbox &quot;手機號碼&quot;&#10;  - text: 收件地址&#10;  - textbox &quot;收件地址&quot;&#10;  - heading &quot;訂單備註&quot; [level=2]&#10;  - text: 訂單備註（選填）&#10;  - textbox &quot;訂單備註（選填）&quot;&#10;  - paragraph: 0/100&#10;  - heading &quot;優惠券&quot; [level=2]&#10;  - radio &quot;不使用優惠券&quot; [checked]&#10;  - text: 不使用優惠券&#10;  - radio &quot;新人小禮券 （NT$20，門檻 NT$0，效期 2027-04-16）&quot;&#10;  - text: 新人小禮券 （NT$20，門檻 NT$0，效期 2027-04-16） 滿千折百券 （NT$100，門檻 NT$1,000，效期 2027-01-16） 未達使用門檻 NT$1,000 滿三千折三百券 （NT$300，門檻 NT$3,000，效期 2027-01-16） 未達使用門檻 NT$3,000 全站 85 折券 （15%，門檻 NT$800，效期 2027-01-16） 未達使用門檻 NT$800 免運券 （免運，門檻 NT$0，效期 2027-01-16） 已使用 舊版折五十券 （NT$50，門檻 NT$0，效期 2026-06-20） 已過期&#10;  - heading &quot;付款方式&quot; [level=2]&#10;  - paragraph: 貨到付款&#10;  - text: 商品小計 NT$400 滿額折扣 NT$0 優惠券折抵 NT$0 運費 NT$80 應付金額 NT$480&#10;  - button &quot;送出訂單&quot; [disabled]">E   AssertionError: Locator expected to be visible
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_be_visible" with timeout 10000ms
+      - waiting for locator("label.coupon-option").filter(has_text="免運券").first
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車 1":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 13":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "結帳" [level=1]
+      - heading "收件資訊" [level=2]
+      - text: 收件人姓名
+      - textbox "收件人姓名"
+      - text: 手機號碼
+      - textbox "手機號碼"
+      - text: 收件地址
+      - textbox "收件地址"
+      - heading "訂單備註" [level=2]
+      - text: 訂單備註（選填）
+      - textbox "訂單備註（選填）"
+      - paragraph: 0/100
+      - heading "優惠券" [level=2]
+      - radio "不使用優惠券" [checked]
+      - text: 不使用優惠券
+      - radio "新人小禮券 （NT$20，門檻 NT$0，效期 2027-04-16）"
+      - text: 新人小禮券 （NT$20，門檻 NT$0，效期 2027-04-16） 滿千折百券 （NT$100，門檻 NT$1,000，效期 2027-01-16） 未達使用門檻 NT$1,000 滿三千折三百券 （NT$300，門檻 NT$3,000，效期 2027-01-16） 未達使用門檻 NT$3,000 全站 85 折券 （15%，門檻 NT$800，效期 2027-01-16） 未達使用門檻 NT$800 免運券 （免運，門檻 NT$0，效期 2027-01-16） 已使用 舊版折五十券 （NT$50，門檻 NT$0，效期 2026-06-20） 已過期
+      - heading "付款方式" [level=2]
+      - paragraph: 貨到付款
+      - text: 商品小計 NT$400 滿額折扣 NT$0 優惠券折抵 NT$0 運費 NT$80 應付金額 NT$480
+      - button "送出訂單" [disabled]</failure></testcase><testcase classname="tests.test_prd_strengthen" name="test_運費顯示為整數元[chromium]" time="11.014" /><testcase classname="tests.test_prd_strengthen" name="test_訂單六種狀態文案與不可刪除[chromium]" time="14.173" /><testcase classname="tests.test_prd_strengthen" name="test_已完成可申請退貨並進入退貨中最後已退款[chromium]" time="22.069" /><testcase classname="tests.test_prd_strengthen" name="test_點擊商品名稱進入詳情與數量選擇器初始為一[chromium]" time="10.546" /><testcase classname="tests.test_prd_strengthen" name="test_前往結帳進入結帳頁[chromium]" time="10.746" /><testcase classname="tests.test_prd_strengthen" name="test_訂單完成頁不顯示商品明細與金額細項[chromium]" time="14.462" /><testcase classname="tests.test_prd_strengthen" name="test_駁回後顯示原因且可再申請[chromium]" time="19.863" /><testcase classname="tests.test_prd_strengthen" name="test_退貨時間軸含狀態與退款金額不含運費[chromium]" time="24.461"><failure message="AssertionError: 時間軸缺少「退款處理中」紀錄（R-7.8／D-20）；時間軸缺少「已退款」紀錄（R-7.8／D-20）；退款金額應為應付−運費＝NT$400（R-7.10／D-19），實際 NT$320；訂單詳情缺少有效「退款時間 YYYY-MM-DD HH:mm」（R-7.9／D-21）；退款通知金額應為 NT$400（D-19），實際 NT$480&#10;assert not ['時間軸缺少「退款處理中」紀錄（R-7.8／D-20）', '時間軸缺少「已退款」紀錄（R-7.8／D-20）', '退款金額應為應付−運費＝NT$400（R-7.10／D-19），實際 NT$320', '訂單詳情缺少有效「退款時間 YYYY-MM-DD HH:mm」（R-7.9／D-21）', '退款通知金額應為 NT$400（D-19），實際 NT$480']">E   AssertionError: 時間軸缺少「退款處理中」紀錄（R-7.8／D-20）；時間軸缺少「已退款」紀錄（R-7.8／D-20）；退款金額應為應付−運費＝NT$400（R-7.10／D-19），實際 NT$320；訂單詳情缺少有效「退款時間 YYYY-MM-DD HH:mm」（R-7.9／D-21）；退款通知金額應為 NT$400（D-19），實際 NT$480
+    assert not ['時間軸缺少「退款處理中」紀錄（R-7.8／D-20）', '時間軸缺少「已退款」紀錄（R-7.8／D-20）', '退款金額應為應付−運費＝NT$400（R-7.10／D-19），實際 NT$320', '訂單詳情缺少有效「退款時間 YYYY-MM-DD HH:mm」（R-7.9／D-21）', '退款通知金額應為 NT$400（D-19），實際 NT$480']</failure></testcase><testcase classname="tests.test_prd_strengthen" name="test_五類通知皆會產生且由新到舊[chromium]" time="20.941" /><testcase classname="tests.test_prd_strengthen" name="test_審核駁回通知標題[chromium]" time="23.879" /><testcase classname="tests.test_prd_strengthen" name="test_優惠券空頁籤文案[chromium]" time="12.364"><skipped type="pytest.skip" message="三個頁籤皆有券，無法驗證空頁籤文案">/Users/chun/Documents/minimart-qe-tests/tests/test_prd_strengthen.py:373: 三個頁籤皆有券，無法驗證空頁籤文案</skipped></testcase><testcase classname="tests.test_prd_strengthen" name="test_退貨原因字數規則對齊驗證章[chromium]" time="17.460" /><testcase classname="tests.test_pricing_summary" name="test_咖啡濾杯兩件_PRD_範例_1_金額[chromium]" time="12.632" /><testcase classname="tests.test_pricing_summary" name="test_機械式鍵盤_PRD_範例_2_滿額折扣與免運[chromium]" time="16.127" /><testcase classname="tests.test_pricing_summary" name="test_機械式鍵盤加滿三千折三百券_PRD_範例_3[chromium]" time="10.916" /><testcase classname="tests.test_pricing_summary" name="test_藍牙耳機_PRD_範例_4_百分比四捨五入[chromium]" time="11.622" /><testcase classname="tests.test_pricing_summary" name="test_免運券不論級距運費為零[chromium]" time="11.483"><skipped type="pytest.skip" message="免運券選項不存在">/Users/chun/Documents/minimart-qe-tests/tests/test_pricing_summary.py:96: 免運券選項不存在</skipped></testcase><testcase classname="tests.test_product_ui" name="test_商品卡片與詳情顯示必要欄位[chromium]" time="9.323" /><testcase classname="tests.test_product_ui" name="test_加入購物車不改變庫存數量[chromium]" time="11.552" /><testcase classname="tests.test_product_ui" name="test_已售完商品詳情選擇器與加入按鈕停用[chromium]" time="8.758" /><testcase classname="tests.test_product_ui" name="test_商品詳情可回商品列表[chromium]" time="9.119" /><testcase classname="tests.test_return_extras" name="test_已退款為最終狀態無出貨收貨取消按鈕[chromium]" time="19.632" /><testcase classname="tests.test_return_extras" name="test_退貨駁回後可重新申請[chromium]" time="21.667" /><testcase classname="tests.test_return_extras" name="test_待審核可撤銷退貨申請[chromium]" time="33.892"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 15000ms&#10;  - waiting for get_by_role(&quot;button&quot;, name=&quot;撤銷退貨申請&quot;)&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;MiniMart&quot;:&#10;    - /url: /&#10;  - navigation:&#10;    - link &quot;商品&quot;:&#10;      - /url: /&#10;    - link &quot;購物車&quot;:&#10;      - /url: /cart&#10;    - link &quot;我的訂單&quot;:&#10;      - /url: /orders&#10;    - link &quot;我的優惠卷&quot;:&#10;      - /url: /coupons&#10;    - link &quot;通知中心 53&quot;:&#10;      - /url: /notifications&#10;    - text: demo@minimart.test&#10;    - button &quot;登出&quot;&#10;- main:&#10;  - heading &quot;訂單詳情&quot; [level=1]&#10;  - heading &quot;訂單資訊&quot; [level=2]&#10;  - text: 訂單編號 MM-20260720-0099 下單時間 2026-07-20 11:08 訂單狀態 退貨中 預計出貨日 2026-07-22&#10;  - heading &quot;商品明細&quot; [level=2]&#10;  - text: 純棉素色 T 恤 NT$400 x1 NT$400&#10;  - heading &quot;金額摘要&quot; [level=2]&#10;  - text: 商品小計 NT$400 滿額折扣 NT$0 優惠券折抵 NT$0 運費 NT$80 應付金額 NT$480&#10;  - heading &quot;收件資訊&quot; [level=2]&#10;  - text: 收件人姓名 撤銷退貨測試 手機號碼 0912345678 收件地址 台北市中山區測試路 1 號&#10;  - heading &quot;訂單備註&quot; [level=2]&#10;  - paragraph: （無備註）&#10;  - heading &quot;狀態與操作&quot; [level=2]&#10;  - list:&#10;    - listitem: 待審核 2026-07-20 11:08&#10;  - button &quot;賣家審核（Demo）&quot;">E   AssertionError: Locator expected to be visible
+    Actual value: None
+    Error: element(s) not found 
+    Call log:
+      - Expect "to_be_visible" with timeout 15000ms
+      - waiting for get_by_role("button", name="撤銷退貨申請")
+    
+    Aria snapshot:
+    - banner:
+      - link "MiniMart":
+        - /url: /
+      - navigation:
+        - link "商品":
+          - /url: /
+        - link "購物車":
+          - /url: /cart
+        - link "我的訂單":
+          - /url: /orders
+        - link "我的優惠卷":
+          - /url: /coupons
+        - link "通知中心 53":
+          - /url: /notifications
+        - text: demo@minimart.test
+        - button "登出"
+    - main:
+      - heading "訂單詳情" [level=1]
+      - heading "訂單資訊" [level=2]
+      - text: 訂單編號 MM-20260720-0099 下單時間 2026-07-20 11:08 訂單狀態 退貨中 預計出貨日 2026-07-22
+      - heading "商品明細" [level=2]
+      - text: 純棉素色 T 恤 NT$400 x1 NT$400
+      - heading "金額摘要" [level=2]
+      - text: 商品小計 NT$400 滿額折扣 NT$0 優惠券折抵 NT$0 運費 NT$80 應付金額 NT$480
+      - heading "收件資訊" [level=2]
+      - text: 收件人姓名 撤銷退貨測試 手機號碼 0912345678 收件地址 台北市中山區測試路 1 號
+      - heading "訂單備註" [level=2]
+      - paragraph: （無備註）
+      - heading "狀態與操作" [level=2]
+      - list:
+        - listitem: 待審核 2026-07-20 11:08
+      - button "賣家審核（Demo）"</failure></testcase><testcase classname="tests.test_return_extras" name="test_退貨原因字數限制與即時計數[chromium]" time="20.325" /><testcase classname="tests.test_return_extras" name="test_退貨申請頁取消不建立申請[chromium]" time="17.521" /><testcase classname="tests.test_return_extras" name="test_非已完成訂單直開退貨頁導回詳情[chromium]" time="11.980" /><testcase classname="tests.test_return_flow" name="test_退貨原因不足五字審核駁回[chromium]" time="19.795" /><testcase classname="tests.test_return_flow" name="test_退貨原因足夠審核通過並退款[chromium]" time="19.357" /><testcase classname="tests.test_return_flow" name="test_退貨申請頁顯示預計退款金額不含運費[chromium]" time="16.581" /><testcase classname="tests.test_stock_boundaries" name="test_已售完商品加入按鈕停用[chromium]" time="9.459" /><testcase classname="tests.test_stock_boundaries" name="test_商品詳情數量上限為_5_與庫存取小[chromium]" time="10.646" /><testcase classname="tests.test_stock_boundaries" name="test_低庫存商品詳情數量上限受庫存限制[chromium]" time="10.356" /><testcase classname="tests.test_stock_boundaries" name="test_購物車數量不得超過庫存[chromium]" time="11.356" /><testcase classname="tests.test_stock_boundaries" name="test_結帳時超過庫存應顯示錯誤且不成立訂單[chromium]" time="16.209" /><testcase classname="tests.test_stock_effects" name="test_下單後商品列表庫存應立即減少[chromium]" time="14.401"><failure message="AssertionError: API 庫存未扣減：下單前 20，下單後 20&#10;assert 20 == (20 - 1)">E   AssertionError: API 庫存未扣減：下單前 20，下單後 20
+    assert 20 == (20 - 1)</failure></testcase><testcase classname="tests.test_stock_effects" name="test_取消訂單後庫存應回補[chromium]" time="12.208"><failure message="AssertionError: 取消前回補前提失敗（疑似未扣庫存 D-09）：下單前 20，下單後 20&#10;assert 20 == (20 - 1)">E   AssertionError: 取消前回補前提失敗（疑似未扣庫存 D-09）：下單前 20，下單後 20
+    assert 20 == (20 - 1)</failure></testcase><testcase classname="tests.test_stock_effects" name="test_退款完成後庫存應回補[chromium]" time="11.906"><failure message="AssertionError: 退款前回補前提失敗（疑似未扣庫存 D-09）：下單前 20，下單後 20&#10;assert 20 == (20 - 1)">E   AssertionError: 退款前回補前提失敗（疑似未扣庫存 D-09）：下單前 20，下單後 20
+    assert 20 == (20 - 1)</failure></testcase><testcase classname="tests.test_validation_extras" name="test_訂單列表空態文案[chromium]" time="9.887"><skipped type="pytest.skip" message="此帳號已有訂單（含內建／歷史單），無法驗證空態">/Users/chun/Documents/minimart-qe-tests/tests/test_validation_extras.py:30: 此帳號已有訂單（含內建／歷史單），無法驗證空態</skipped></testcase><testcase classname="tests.test_validation_extras" name="test_通知中心空態文案[chromium]" time="8.938"><skipped type="pytest.skip" message="此帳號已有通知，無法驗證空態">/Users/chun/Documents/minimart-qe-tests/tests/test_validation_extras.py:44: 此帳號已有通知，無法驗證空態</skipped></testcase><testcase classname="tests.test_validation_extras" name="test_折扣碼重複領取應顯示錯誤[chromium]" time="10.269"><failure message="Failed: 缺少折扣碼領取 UI（D-13／R-17.3）">E   Failed: 缺少折扣碼領取 UI（D-13／R-17.3）</failure></testcase><testcase classname="tests.test_validation_extras" name="test_姓名前後空白應被去除後驗證[chromium]" time="10.734" /><testcase classname="tests.test_validation_extras" name="test_多欄驗證失敗時各自顯示錯誤訊息[chromium]" time="11.891" /><testcase classname="tests.test_validation_extras" name="test_超長姓名不自動截斷且無法送出[chromium]" time="10.500" /><testcase classname="tests.test_validation_extras" name="test_Unicode字元數以字元計[chromium]" time="10.889" /><testcase classname="tests.api.test_validation_and_stock" name="test_登出後購物車清空" time="1.046"><failure message="[XPASS(strict)] API 登出未清空購物車，與 R-1.7 不符">[XPASS(strict)] API 登出未清空購物車，與 R-1.7 不符</failure></testcase><testcase classname="tests.api.test_validation_and_stock" name="test_登入錯誤帳密回_401" time="0.182" /><testcase classname="tests.api.test_validation_and_stock" name="test_空購物車結帳回_400" time="0.647" /><testcase classname="tests.api.test_validation_and_stock" name="test_手機_11_碼驗證失敗回_400" time="1.287"><skipped type="pytest.xfail" message="已知缺陷 D-07：後端未驗證 11 碼手機" /></testcase><testcase classname="tests.api.test_validation_and_stock" name="test_收件人姓名空白回_400" time="1.192" /><testcase classname="tests.api.test_validation_and_stock" name="test_庫存不足結帳回_409" time="1.542" /><testcase classname="tests.api.test_validation_and_stock" name="test_不存在商品回_404" time="1.542" /></testsuite></testsuites>
