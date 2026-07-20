@@ -83,11 +83,14 @@ def fill_and_submit_checkout(
     name: str = "測試買家",
     phone: str = "0912345678",
     address: str = "台北市中山區測試路 1 號",
+    note: str | None = None,
 ) -> str:
-    """填寫收件資訊並送出，回傳訂單編號。"""
+    """填寫收件資訊（可選訂單備註）並送出，回傳訂單編號。"""
     page.fill("#checkout-name", name)
     page.fill("#checkout-phone", phone)
     page.fill("#checkout-address", address)
+    if note is not None:
+        page.fill("#checkout-note", note)
     page.get_by_role("button", name="送出訂單").click()
     page.wait_for_url(re.compile(r".*/orders/.+/complete"), timeout=30_000)
     match = re.search(r"/orders/(MM-[^/]+)/complete", page.url)
