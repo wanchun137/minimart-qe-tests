@@ -7,9 +7,8 @@ import pytest
 from tests.api.helpers.client import MiniMartApiClient
 
 
-@pytest.mark.xfail(reason="API 登出未清空購物車，與 R-1.7 不符", strict=True)
 def test_登出後購物車清空(api: MiniMartApiClient) -> None:
-    """R-1.7：登出 API 應清空購物車。"""
+    """R-1.7：登出 API 應清空購物車（v2.1 hotfix 已修復）。"""
     api.login()
     mug = api.product_by_name("手沖咖啡濾杯")
     api.add_to_cart(mug["id"], 1)
