@@ -1,10 +1,56 @@
-"""訂單詳情狀態操作共用工具。"""
+"""訂單列表與詳情共用工具。"""
 
 from __future__ import annotations
 
 import re
+from datetime import datetime
 
 from playwright.sync_api import Page, expect
+
+CREATED_AT_FORMAT = "%Y-%m-%d %H:%M"
+
+
+def go_to_order_list(page: Page) -> None:
+    """進入訂單列表並等待載入完成（含空列表）。"""
+    page.goto("/orders", wait_until="domcontentloaded")
+    page.wait_for_selector(".order-row, .order-list-empty-text", timeout=15_000)
+
+
+def order_list_rows(page: Page) -> list[dict[str, str]]:
+    """讀取訂單列表每一列的編號、時間、狀態、件數、應付。"""
+    rows = page.locator(".order-row")
+    data: list[dict[str, str]] = []
+    for i in range(rows.count()):
+        row = rows.nth(i)
+        data.append(
+            {
+                "id": row.locator(".order-row-id").inner_text(),
+                "createdAt": row.locator(".order-row-createdAt").inner_text(),
+                "status": row.locator(".order-row-status").inner_text(),
+                "itemCount": row.locator(".order-row-itemCount").inner_text(),
+                "payable": row.locator(".order-row-payable").inner_text(),
+            }
+        )
+    return data
+
+
+def parse_order_created_at(text: str) -> datetime:
+    """解析列表／API 的下單時間字串。"""
+    return datetime.strptime(text.strip(), CREATED_AT_FORMAT)
+
+
+def assert_orders_sorted_new_to_old(created_at_texts: list[str]) -> None:
+    """R-14.1：下單時間應由新到舊（非遞增）。"""
+    times = [parse_order_created_at(t) for t in created_at_texts]
+    for i in range(len(times) - 1):
+        assert times[i] >= times[i + 1], (
+            f"R-14.1：第 {i + 1} 列 {created_at_texts[i]} 應不早於第 {i + 2} 列 {created_at_texts[i + 1]}"
+        )
+
+
+def assert_cancel_order_available(page: Page) -> None:
+    """R-6.5／R-14.9：待出貨訂單詳情應顯示「取消訂單」按鈕（缺失視為缺陷 D-23）。"""
+    expect(page.get_by_role("button", name="取消訂單")).to_be_visible()
 
 
 def open_order(page: Page, order_id: str) -> None:
