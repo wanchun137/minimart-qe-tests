@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import pytest
 from playwright.sync_api import Page, expect
 
 from tests.helpers.auth import login
 from tests.helpers.cart import add_product_from_list, clear_cart
 from tests.helpers.checkout import fill_and_submit_checkout, go_to_checkout
 from tests.helpers.orders import (
+    assert_cancel_order_available,
     cancel_order,
     confirm_receipt,
     open_order,
@@ -25,10 +25,7 @@ def test_待出貨訂單可取消(page: Page) -> None:
     order_id = fill_and_submit_checkout(page, name="取消測試")
 
     open_order(page, order_id)
-    if page.get_by_role("button", name="取消訂單").count() == 0:
-        probe = page.request.post(f"/api/orders/{order_id}/cancel")
-        if probe.status == 404:
-            pytest.skip("此環境未實作取消訂單 UI/API")
+    assert_cancel_order_available(page)
     cancel_order(page, order_id)
     expect(page.get_by_role("button", name="模擬出貨（Demo）")).to_have_count(0)
 

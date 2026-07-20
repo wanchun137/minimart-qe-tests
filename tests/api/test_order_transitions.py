@@ -42,8 +42,9 @@ def test_取消訂單_合法與非法狀態(authed_api: MiniMartApiClient) -> No
     """R-6.5：待出貨可取消；已出貨後不可取消。"""
     order_id = authed_api.place_order_for_product("純棉素色 T 恤", recipient_name="取消狀態 API")
     cancel = authed_api.cancel_order(order_id)
-    if cancel.status == 404:
-        pytest.skip("此環境未實作取消訂單 API")
+    assert cancel.status != 404, (
+        "POST /api/orders/{id}/cancel 未實作（R-6.5／openapi；見 D-23）"
+    )
     assert cancel.ok, f"取消失敗：{cancel.status} {cancel.text()}"
     assert authed_api.get_order(order_id).json()["status"] == "已取消"
 
