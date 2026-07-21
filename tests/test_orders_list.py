@@ -1,8 +1,10 @@
-"""R-14.1～R-14.2：訂單列表排序、完整列表與列表列欄位。"""
+"""R-6.9、R-14.1～R-14.2：訂單編號格式、列表排序、完整列表與列表列欄位。"""
 
 from __future__ import annotations
 
 import re
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from playwright.sync_api import Page, expect
 
@@ -15,12 +17,39 @@ from tests.helpers.orders import (
     order_list_rows,
 )
 
+_ORDER_ID_RE = re.compile(r"^MM-(\d{8})-(\d{4})$")
+
 
 def _place_order(page: Page, *, product: str, name: str) -> str:
     clear_cart(page)
     add_product_from_list(page, product)
     go_to_checkout(page)
     return fill_and_submit_checkout(page, name=name, address="台北市列表測試路 14 號")
+
+
+def _parse_order_id(order_id: str) -> tuple[str, int]:
+    match = _ORDER_ID_RE.match(order_id)
+    assert match, f"訂單編號格式不符 R-6.9（MM-YYYYMMDD-NNNN）：{order_id}"
+    return match.group(1), int(match.group(2))
+
+
+def test_訂單編號格式與當日流水號遞增補零(page: Page) -> None:
+    """R-6.9：MM-YYYYMMDD-NNNN；當日流水號遞增且不足四位補零。"""
+    login(page)
+    first_id = _place_order(page, product="純棉素色 T 恤", name="流水號第一筆")
+    second_id = _place_order(page, product="手沖咖啡濾杯", name="流水號第二筆")
+
+    today = datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y%m%d")
+    first_date, first_seq = _parse_order_id(first_id)
+    second_date, second_seq = _parse_order_id(second_id)
+
+    assert first_date == today, f"第一筆日期應為今日 {today}，實際 {first_date}"
+    assert second_date == today, f"第二筆日期應為今日 {today}，實際 {second_date}"
+    assert second_seq == first_seq + 1, (
+        f"當日流水號應遞增：{first_id} → {second_id}"
+    )
+    assert f"{first_seq:04d}" == first_id.split("-")[-1]
+    assert f"{second_seq:04d}" == second_id.split("-")[-1]
 
 
 def test_訂單列表依下單時間由新到舊排序(page: Page) -> None:

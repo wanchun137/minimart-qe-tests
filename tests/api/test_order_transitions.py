@@ -55,6 +55,24 @@ def test_取消訂單_合法與非法狀態(authed_api: MiniMartApiClient) -> No
     assert denied.json()["error"] == "CANNOT_CANCEL"
 
 
+def test_已取消為最終狀態不可再轉換(authed_api: MiniMartApiClient) -> None:
+    """R-6.7：已取消後 ship／confirm-receipt 皆應拒絕。"""
+    order_id = authed_api.place_order_for_product("純棉素色 T 恤", recipient_name="取消終態 API")
+    cancel = authed_api.cancel_order(order_id)
+    assert cancel.status != 404, (
+        "POST /api/orders/{id}/cancel 未實作（R-6.5／openapi；見 D-23）"
+    )
+    assert cancel.ok, f"取消失敗：{cancel.status} {cancel.text()}"
+    assert authed_api.get_order(order_id).json()["status"] == "已取消"
+
+    ship = authed_api.ship_order(order_id)
+    assert ship.status == 409, f"已取消不應可出貨：{ship.status} {ship.text()}"
+    confirm = authed_api.confirm_receipt(order_id)
+    assert confirm.status == 409, f"已取消不應可確認收貨：{confirm.status} {confirm.text()}"
+    again = authed_api.cancel_order(order_id)
+    assert again.status == 409, f"已取消不應可再取消：{again.status} {again.text()}"
+
+
 def test_退貨申請_合法與非法狀態(authed_api: MiniMartApiClient) -> None:
     """R-7.1、R-7.3：已完成可申請；待出貨不可。"""
     order_id = authed_api.place_order_for_product("純棉素色 T 恤", recipient_name="退貨狀態 API")
