@@ -1,4 +1,4 @@
-"""R-2.6、R-2.9、R-5.4、R-12.8、R-12.11、R-13.3：金額邊界、結帳與完成頁。"""
+"""R-2.6、R-2.9、R-5.4、R-12.8～R-12.11、R-13.3：金額邊界、結帳與完成頁。"""
 
 from __future__ import annotations
 
@@ -66,6 +66,25 @@ def test_空購物車直開結帳導向購物車(page: Page) -> None:
     page.goto("/checkout", wait_until="domcontentloaded")
     expect(page).to_have_url(re.compile(r".*/cart"), timeout=15_000)
     expect(page.get_by_text("購物車是空的")).to_be_visible()
+
+
+def test_下單成功後購物車應清空(page: Page) -> None:
+    """R-12.9：訂單建立成功後清空購物車，再進購物車頁為空。"""
+    login(page)
+    clear_cart(page)
+    add_product_from_list(page, "純棉素色 T 恤")
+    add_product_from_list(page, "手沖咖啡濾杯")
+    page.goto("/cart", wait_until="domcontentloaded")
+    expect(page.locator(".cart-row")).not_to_have_count(0)
+
+    go_to_checkout(page)
+    fill_and_submit_checkout(page, name="下單清空購物車")
+    expect(page.get_by_role("heading", name="訂單已成立")).to_be_visible()
+
+    page.goto("/cart", wait_until="domcontentloaded")
+    expect(page.get_by_text("購物車是空的")).to_be_visible()
+    expect(page.locator(".cart-row")).to_have_count(0)
+    expect(page.get_by_test_id("cart-badge")).to_have_count(0)
 
 
 def _order_list_count(page: Page) -> int:
