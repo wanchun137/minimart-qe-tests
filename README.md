@@ -57,14 +57,14 @@ tests/
   test_checkout.py         # 結帳主路徑
   test_checkout_validation.py # 收件欄位與送出停用（R-12.6、R-18）
   test_nav.py              # 導覽列文字（D-01）
-  test_logout_cart.py      # 登出清空購物車（D-04；v2.1 已修復）
+  test_logout_cart.py      # 登出清空／切畫面與重新整理保留（R-1.7、R-11.1；D-04）
   test_orders_count.py     # 訂單列表件數（D-05／R-14.2；v2.1 已修復）
-  test_orders_list.py      # 訂單列表排序／完整列表／列表列欄位（R-14.1～R-14.2）
+  test_orders_list.py      # 訂單編號格式流水號／列表排序（R-6.9、R-14.1～R-14.2）
   test_order_note.py       # 訂單備註（R-12.12、R-14.11、R-18.10；v2.1 新功能）
   test_order_detail.py     # 訂單詳情五區塊（R-14.4～14.8）
   test_notifications.py    # 通知內容／出貨退款／已讀（R-8、R-15；D-12）
   test_my_coupons.py       # 我的優惠券頁（R-17；D-13）
-  test_coupon_ui.py        # 換券／不可用券／折抵列（R-4.10、R-4.11）
+  test_coupon_ui.py        # 換券／不使用優惠券／不可用券（R-4.10、R-4.11、R-12.4）
   test_coupon_threshold.py # 券門檻邊界（D-08）
   test_coupon_discount.py  # 折抵金額（D-06）
   test_phone_validation.py # 手機長度（D-07）
@@ -72,13 +72,13 @@ tests/
   test_stock_effects.py    # 下單扣庫存／取消退款回補（R-3.5、R-3.7；D-09～11）
   test_nav_extras.py       # 通知徽章／登出保留（R-1.5、R-1.8；D-15）
   test_product_ui.py       # 商品欄位／加車不扣庫存／詳情售完（R-3.1、R-3.3、R-10）
-  test_checkout_extras.py  # 運費位置／完成頁出貨日／處理中（R-5.4、R-12.8、R-13.3；D-16）
+  test_checkout_extras.py  # 運費位置／下單清空購物車／完成頁（R-5.4、R-12.8～12.9、R-13.3；D-16）
   test_coupon_lifecycle.py # 用券已使用／免運路徑／還券／過期（R-4.12～4.14；D-18）
-  test_return_extras.py    # 撤銷／再申請／退貨字數（R-7.11～7.12、R-16；D-17）
+  test_return_extras.py    # 已取消終態／退貨中按鈕／撤銷（R-6.7、R-7.11～7.13、R-16；D-17）
   test_validation_extras.py # 空態／重複領取／驗證細節（R-14.3、R-17.3、R-18）
   test_prd_strengthen.py   # 弱覆蓋補強（含退款時間軸／金額／退款時間；D-19～D-21）
   test_pricing_summary.py  # 運費／滿額／應付（R-2、R-4、R-5）
-  test_order_status.py     # 取消／出貨／收貨（R-6）
+  test_order_status.py     # 取消確認框／10 分鐘窗／出貨／收貨（R-6.5；D-23）
   test_return_flow.py      # 退貨審核／退款（R-7、R-16）
   api/
     conftest.py            # API session／request fixture
@@ -89,11 +89,9 @@ tests/
     test_checkout_preview.py   # R-4.15 計價順序
     test_coupon_boundaries.py  # 券門檻邊界
     test_validation_and_stock.py # 400／409 驗證
-    test_order_transitions.py    # 訂單／退貨狀態
+    test_order_transitions.py    # 訂單／退貨狀態（含已取消終態 R-6.7）
     test_ui_api_cross.py         # UI 與 API 交叉驗證
     test_orders_list.py          # R-14.1 訂單列表排序
-docs/
-  API合約覆蓋紀錄.md
 conftest.py
 .env.example
 pytest.ini
@@ -130,5 +128,5 @@ playwright show-trace test-results/<失敗資料夾>/trace.zip
 - 金額精確斷言以 `/api/checkout/preview` 為基準，再比對結帳頁 UI 的關鍵欄位（小計／運費／應付）。
 - 若受測環境未提供「免運券已用盡」等測資限制，相關案例會 `pytest.skip`。
 - **取消訂單**依 PRD／openapi 為必備功能；缺失時測試 **FAIL** 並記為 D-23，不以 skip 帶過。
-- API 層依 `openapi.yaml` 合約撰寫；已知缺陷以 `pytest.mark.xfail` 標記，詳見 `docs/API合約覆蓋紀錄.md`。
+- API 層依 `openapi.yaml` 合約撰寫；已知缺陷以 `pytest.mark.xfail` 標記，詳見 [`../candidate-package-v2.0/API合約覆蓋紀錄.md`](../candidate-package-v2.0/API合約覆蓋紀錄.md)（QA 文件，不納入本 repo）。
 - 失敗影片尺寸設為 800×600，並縮短 UI 等待（`domcontentloaded`、移除固定 `wait_for_timeout`）。
