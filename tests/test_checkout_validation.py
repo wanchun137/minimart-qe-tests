@@ -48,6 +48,18 @@ def test_地址過短不可啟用送出(page: Page) -> None:
     expect(page.get_by_role("button", name="送出訂單")).to_be_disabled()
 
 
+def test_地址過長不可啟用送出(page: Page) -> None:
+    """R-18.5：地址去除空白後字數 > 100 時應停用送出。"""
+    _prepare_checkout(page)
+    page.fill("#checkout-name", "驗證買家")
+    page.fill("#checkout-phone", "0912345678")
+    long_address = "字" * 101
+    page.fill("#checkout-address", long_address)
+    expect(page.get_by_role("button", name="送出訂單")).to_be_disabled()
+    page.locator("#checkout-address").blur()
+    expect(page.locator("main")).to_contain_text("收件地址須為 5 至 100 個字")
+
+
 def test_姓名超過二十字不可啟用送出(page: Page) -> None:
     """R-18.3：姓名最多 20 字。"""
     _prepare_checkout(page)

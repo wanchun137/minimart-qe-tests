@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import re
+
 from playwright.sync_api import Page, expect
 
 from tests.helpers.auth import login
 from tests.helpers.cart import add_product_with_quantity, clear_cart
 from tests.helpers.checkout import fill_and_submit_checkout, format_nt, go_to_checkout
-from tests.helpers.orders import open_order
+from tests.helpers.orders import cancel_order, open_order
 
 
 def test_訂單詳情五區塊與商品收件資訊正確(page: Page) -> None:
@@ -57,3 +59,37 @@ def test_訂單詳情五區塊與商品收件資訊正確(page: Page) -> None:
 
     # R-14.9 待出貨操作
     expect(page.get_by_role("button", name="模擬出貨（Demo）")).to_be_visible()
+
+
+def test_已取消狀態顯示取消時間且無任何按鈕(page: Page) -> None:
+    """R-14.9：已取消顯示取消時間；無任何按鈕。"""
+    login(page)
+    clear_cart(page)
+    add_product_with_quantity(page, "純棉素色 T 恤", 1)
+    go_to_checkout(page)
+    order_id = fill_and_submit_checkout(
+        page,
+        name="已取消時間測試買家",
+        phone="0912345678",
+        address="台北市已取消測試路 88 號",
+    )
+
+    open_order(page, order_id)
+    cancel_order(page, order_id)
+
+    main_text = page.locator("main").inner_text()
+    assert "已取消" in main_text
+    assert re.search(r"取消時間\s*\d{4}-\d{2}-\d{2} \d{2}:\d{2}", main_text), (
+        f"主畫面需出現 R-14.9 的「取消時間 YYYY-MM-DD HH:mm」，實際：{main_text[:2000]}"
+    )
+
+    # R-14.9：已取消無任何按鈕
+    for btn in (
+        "模擬出貨（Demo）",
+        "取消訂單",
+        "確認收貨",
+        "申請退貨",
+        "賣家審核（Demo）",
+        "撤銷退貨申請",
+    ):
+        expect(page.get_by_role("button", name=btn)).to_have_count(0)

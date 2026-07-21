@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from datetime import datetime
 
 import pytest
 from playwright.sync_api import Page, expect
@@ -297,6 +298,44 @@ def test_退貨時間軸含狀態與退款金額不含運費(page: Page) -> None
         problems.append("退款通知缺少退款時間（R-8.6／D-21）")
 
     assert not problems, "；".join(problems)
+
+
+def test_退貨時間軸由舊到新順序(page: Page) -> None:
+    """R-16.7：退貨進度時間軸由上而下由舊到新（時間戳遞增）。"""
+    login(page)
+    clear_cart(page)
+    add_product_from_list(page, "純棉素色 T 恤")
+    go_to_checkout(page)
+    order_id = fill_and_submit_checkout(page, name="退貨時間軸順序測試")
+
+    open_order(page, order_id)
+    ship_order(page, order_id)
+    confirm_receipt(page, order_id)
+    apply_return(page, "商品有瑕疵想退貨")
+    seller_review(page)
+
+    expect(page.locator("main")).to_contain_text("已退款", timeout=30_000)
+    main = page.locator("main").inner_text()
+    section = main.split("狀態與操作", 1)[-1] if "狀態與操作" in main else main
+
+    timeline_pairs = re.findall(
+        r"(待審核|已駁回|退款處理中|已退款)\s*\n\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2})",
+        section,
+    )
+    assert timeline_pairs, "時間軸未出現任何（狀態名稱 + 退款處理時間）對照（R-16.7）"
+
+    times = [
+        datetime.strptime(t, "%Y-%m-%d %H:%M") for _, t in timeline_pairs
+    ]
+    for i in range(len(times) - 1):
+        assert times[i] <= times[i + 1], (
+            f"時間軸應由舊到新遞增（R-16.7），第 {i+1} 筆 {times[i]} > 第 {i+2} 筆 {times[i+1]}"
+        )
+
+    timeline_statuses = [name for name, _ in timeline_pairs]
+    required = ["待審核", "退款處理中", "已退款"]
+    missing = [s for s in required if s not in timeline_statuses]
+    assert not missing, f"時間軸缺少必備狀態（R-16.7）：{', '.join(missing)}"
 
 
 def test_五類通知皆會產生且由新到舊(page: Page) -> None:
