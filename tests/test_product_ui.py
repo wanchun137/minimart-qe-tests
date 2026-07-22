@@ -10,6 +10,7 @@ from tests.helpers.auth import login
 from tests.helpers.cart import add_product_from_list, clear_cart
 from tests.helpers.products import (
     parse_remaining_stock,
+    product_by_name_via_api,
     product_stock_text_on_list,
     product_stock_via_api,
 )
@@ -35,6 +36,45 @@ def test_商品卡片與詳情顯示必要欄位(page: Page) -> None:
     expect(main.locator(".product-detail-stock")).to_be_visible()
     expect(main.locator(".quantity-picker")).to_be_visible()
     expect(main.locator(".add-to-cart-btn")).to_be_visible()
+
+
+def test_商品列表卡片商品具描述欄位(page: Page) -> None:
+    """R-3.1：列表上的商品在 API 資料中須含非空 description。"""
+    login(page)
+    page.goto("/", wait_until="domcontentloaded")
+    card = page.locator(".product-card", has_text="手沖咖啡濾杯").first
+    expect(card).to_be_visible()
+
+    product = product_by_name_via_api(page, "手沖咖啡濾杯")
+    description = product.get("description", "").strip()
+    assert description, "API 商品描述不可為空（R-3.1）"
+
+    desc_el = card.locator(
+        ".product-card-description, .product-description, [data-testid='product-description']"
+    )
+    if desc_el.count() > 0:
+        expect(desc_el.first).to_contain_text(description)
+
+
+def test_商品詳情顯示商品描述(page: Page) -> None:
+    """R-10.1：詳情頁須顯示商品描述（與 API 一致）。"""
+    login(page)
+    product = product_by_name_via_api(page, "手沖咖啡濾杯")
+    description = product.get("description", "").strip()
+    assert description, "API 商品描述不可為空"
+
+    page.goto("/", wait_until="domcontentloaded")
+    page.locator(".product-card", has_text="手沖咖啡濾杯").locator("a.product-card-link").click()
+    page.wait_for_selector(".product-detail-page", timeout=15_000)
+
+    detail = page.locator(".product-detail-page")
+    desc = detail.locator(
+        ".product-detail-description, .product-description, [data-testid='product-description']"
+    )
+    if desc.count() > 0:
+        expect(desc.first).to_contain_text(description)
+    else:
+        expect(detail).to_contain_text(description)
 
 
 def test_加入購物車不改變庫存數量(page: Page) -> None:

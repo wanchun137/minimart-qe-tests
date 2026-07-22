@@ -11,8 +11,10 @@ from tests.helpers.checkout import (
     COUPON_CODES,
     assert_preview_amounts,
     expect_summary_matches_preview,
+    format_nt,
     go_to_checkout,
     select_coupon,
+    summary_row_value,
 )
 
 
@@ -66,6 +68,22 @@ def test_機械式鍵盤加滿三千折三百券_PRD_範例_3(page: Page) -> Non
         shipping=0,
         payable=2721,
     )
+
+
+def test_滿額折扣列顯示減號格式(page: Page) -> None:
+    """R-2.8：折扣金額行須以 −NT$ 格式顯示（含 Unicode 減號）。"""
+    login(page)
+    clear_cart(page)
+    add_product_with_quantity(page, "機械式鍵盤", 1)
+    go_to_checkout(page)
+    preview = expect_summary_matches_preview(page)
+    assert preview["bulkDiscount"] > 0
+
+    bulk_text = summary_row_value(page, "滿額折扣").inner_text()
+    assert bulk_text.startswith("−NT$") or bulk_text.startswith("-NT$"), (
+        f"滿額折扣應以減號開頭（R-2.8），實際 {bulk_text!r}"
+    )
+    expect(summary_row_value(page, "滿額折扣")).to_have_text(format_nt(preview["bulkDiscount"], as_discount=True))
 
 
 def test_藍牙耳機_PRD_範例_4_百分比四捨五入(page: Page) -> None:

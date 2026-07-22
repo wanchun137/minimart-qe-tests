@@ -113,6 +113,18 @@ def test_出貨後產生出貨通知(page: Page) -> None:
     expect(row).to_be_visible(timeout=20_000)
     expect(row.locator(".notification-title")).to_have_text(f"訂單 {order_id} 已出貨")
 
+    detail = page.request.get(f"/api/orders/{order_id}")
+    assert detail.ok, detail.text()
+    shipped_at = detail.json().get("shippedAt")
+    assert shipped_at, "出貨後 API 應有 shippedAt"
+
+    body = row.locator("[data-testid^='notification-body']")
+    expect(body).to_be_visible()
+    body_text = body.inner_text()
+    assert shipped_at in body_text or re.search(
+        rf"出貨時間\s*{re.escape(shipped_at)}", body_text
+    ), f"出貨通知內文應含出貨時間 {shipped_at!r}（R-8.3），實際：{body_text!r}"
+
 
 def test_退貨申請與退款完成產生對應通知(page: Page) -> None:
     """R-8.4／R-8.6：退貨受理與退款完成通知標題對應該筆訂單。"""

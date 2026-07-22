@@ -21,6 +21,16 @@ def product_stock_text_on_list(page: Page, product_name: str) -> str:
     return card.inner_text()
 
 
+def product_by_name_via_api(page: Page, product_name: str) -> dict:
+    """依商品名稱從 /api/products 取得完整商品資料（含 description）。"""
+    response = page.request.get("/api/products")
+    assert response.ok, f"讀取商品列表失敗：{response.status} {response.text()}"
+    for product in response.json():
+        if product.get("name") == product_name:
+            return product
+    raise AssertionError(f"找不到商品：{product_name}")
+
+
 def parse_remaining_stock(text: str) -> int | None:
     """從「剩餘 N 件」解析庫存；已售完回傳 0。"""
     if "已售完" in text:

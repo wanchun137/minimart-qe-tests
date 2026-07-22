@@ -22,12 +22,23 @@ def test_同一商品購物車數量上限為_5(page: Page) -> None:
 
 def test_移除商品需確認後列消失(page: Page) -> None:
     """R-11.6：移除確認「確定要移除〈商品〉嗎？」確認後列消失。"""
+    product = "純棉素色 T 恤"
     login(page)
     clear_cart(page)
-    add_product_from_list(page, "純棉素色 T 恤")
+    add_product_from_list(page, product)
     page.goto("/cart", wait_until="domcontentloaded")
-    page.once("dialog", lambda d: d.accept())
-    page.locator(".cart-row", has_text="純棉素色 T 恤").get_by_role("button", name="移除").click()
+
+    dialog_messages: list[str] = []
+
+    def accept_remove_dialog(dialog) -> None:
+        dialog_messages.append(dialog.message)
+        dialog.accept()
+
+    page.once("dialog", accept_remove_dialog)
+    page.locator(".cart-row", has_text=product).get_by_role("button", name="移除").click()
+    assert dialog_messages == [f"確定要移除〈{product}〉嗎？"], (
+        f"移除確認文案不符 R-11.6，實際 {dialog_messages!r}"
+    )
     expect(page.get_by_text("購物車是空的")).to_be_visible(timeout=10_000)
 
 

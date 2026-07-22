@@ -9,7 +9,7 @@ from playwright.sync_api import Page, expect
 from tests.helpers.auth import login
 from tests.helpers.cart import add_product_with_quantity, clear_cart
 from tests.helpers.checkout import fill_and_submit_checkout, format_nt, go_to_checkout
-from tests.helpers.orders import cancel_order, open_order
+from tests.helpers.orders import cancel_order, confirm_receipt, open_order, ship_order
 
 
 def test_訂單詳情五區塊與商品收件資訊正確(page: Page) -> None:
@@ -93,3 +93,28 @@ def test_已取消狀態顯示取消時間且無任何按鈕(page: Page) -> None
         "撤銷退貨申請",
     ):
         expect(page.get_by_role("button", name=btn)).to_have_count(0)
+
+
+def test_已完成未退貨訂單顯示無退貨狀態(page: Page) -> None:
+    """R-7.4：尚未申請退貨時，詳情須顯示退貨狀態「無退貨」。"""
+    login(page)
+    clear_cart(page)
+    add_product_with_quantity(page, "純棉素色 T 恤", 1)
+    go_to_checkout(page)
+    order_id = fill_and_submit_checkout(
+        page,
+        name="無退貨狀態測試",
+        phone="0912345678",
+        address="台北市無退貨測試路 7 號",
+    )
+
+    open_order(page, order_id)
+    ship_order(page, order_id)
+    confirm_receipt(page, order_id)
+
+    expect(page.locator("main")).to_contain_text("已完成")
+    expect(page.locator("main")).to_contain_text("無退貨")
+
+    detail = page.request.get(f"/api/orders/{order_id}")
+    assert detail.ok, detail.text()
+    assert detail.json().get("returnStatus") == "無退貨"
