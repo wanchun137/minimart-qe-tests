@@ -1,14 +1,15 @@
-"""R-9.5、R-10.3、R-11.5、R-3.4：庫存與數量上限邊界。"""
+"""R-9.5、R-10.3、R-11.5、R-3.4、R-12.10：庫存與數量上限邊界。"""
 
 from __future__ import annotations
 
 import re
 
+import pytest
 from playwright.sync_api import Page, expect
 
 from tests.helpers.auth import login
 from tests.helpers.cart import add_product_from_list, clear_cart
-from tests.helpers.checkout import fill_and_submit_checkout, go_to_checkout
+from tests.helpers.checkout import go_to_checkout, select_coupon
 
 
 def test_已售完商品加入按鈕停用(page: Page) -> None:
@@ -64,15 +65,65 @@ def test_結帳時超過庫存應顯示錯誤且不成立訂單(page: Page) -> N
     """R-3.4、R-12.10：購買數量超過庫存時整筆訂單不成立。"""
     login(page)
     clear_cart(page)
-    add_product_from_list(page, "折疊露營椅")
-    go_to_checkout(page)
-    fill_and_submit_checkout(page, name="庫存邊界測試")
-
-    page.request.post("/api/cart/items", data={"productId": 7, "quantity": 2})
+    products = page.request.get("/api/products").json()
+    chair = next(p for p in products if p["name"] == "折疊露營椅")
+    # 購物車可暫存超過庫存的數量，送出時才擋
+    for _ in range(max(chair["stock"], 0) + 1):
+        page.request.post(
+            "/api/cart/items",
+            data={"productId": chair["id"], "quantity": 1},
+        )
     page.goto("/checkout", wait_until="domcontentloaded")
     page.fill("#checkout-name", "庫存邊界測試")
     page.fill("#checkout-phone", "0912345678")
     page.fill("#checkout-address", "台北市中山區測試路 1 號")
     page.get_by_role("button", name="送出訂單").click()
-    expect(page.get_by_text(re.compile(r"商品〈折疊露營椅〉庫存不足"))).to_be_visible(timeout=15_000)
+    expect(page.get_by_text(re.compile(r"商品〈折疊露營椅〉庫存不足"))).to_be_visible(
+        timeout=15_000
+    )
     expect(page).to_have_url(re.compile(r".*/checkout"))
+
+
+def test_結帳失敗停留頁面且按鈕恢復車券不變(page: Page) -> None:
+    """R-12.10：庫存不足失敗時留在結帳頁、送出可再點、購物車與券狀態不變。"""
+    login(page)
+    clear_cart(page)
+
+    coupons_before = page.request.get("/api/coupons").json()
+    newbie = next((c for c in coupons_before if c.get("code") == "NEWBIE20"), None)
+    if not newbie or newbie.get("status") != "未使用":
+        pytest.skip("新人小禮券不可用，無法驗證失敗後券不變")
+
+    products = page.request.get("/api/products").json()
+    chair = next(p for p in products if p["name"] == "折疊露營椅")
+    for _ in range(max(chair["stock"], 0) + 1):
+        page.request.post(
+            "/api/cart/items",
+            data={"productId": chair["id"], "quantity": 1},
+        )
+    cart_before = page.request.get("/api/cart").json()
+    assert cart_before.get("items"), "購物車應有商品以觸發結帳失敗"
+
+    go_to_checkout(page)
+    select_coupon(page, "新人小禮券")
+    page.fill("#checkout-name", "結帳失敗保留測試")
+    page.fill("#checkout-phone", "0912345678")
+    page.fill("#checkout-address", "台北市中山區測試路 1 號")
+
+    submit = page.get_by_role("button", name="送出訂單")
+    submit.click()
+    expect(page.get_by_text(re.compile(r"商品〈折疊露營椅〉庫存不足"))).to_be_visible(
+        timeout=15_000
+    )
+    expect(page).to_have_url(re.compile(r".*/checkout"))
+    expect(submit).to_be_enabled(timeout=10_000)
+
+    cart_after = page.request.get("/api/cart").json()
+    assert cart_after.get("items"), "失敗後購物車不應被清空"
+    assert cart_after.get("count") == cart_before.get("count")
+
+    coupons_after = page.request.get("/api/coupons").json()
+    newbie_after = next(c for c in coupons_after if c.get("code") == "NEWBIE20")
+    assert newbie_after.get("status") == "未使用", (
+        f"失敗後優惠券不應變已使用，實際 {newbie_after.get('status')!r}"
+    )
