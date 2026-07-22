@@ -74,13 +74,17 @@ def test_已取消為最終狀態不可再轉換(authed_api: MiniMartApiClient) 
 
 
 def test_退貨申請_合法與非法狀態(authed_api: MiniMartApiClient) -> None:
-    """R-7.1、R-7.3：已完成可申請；待出貨不可。"""
+    """R-7.1、R-7.3：僅已完成可申請；待出貨／已出貨不可。"""
     order_id = authed_api.place_order_for_product("純棉素色 T 恤", recipient_name="退貨狀態 API")
     early = authed_api.apply_return(order_id, "尚未完成就想退")
     assert early.status == 409
     assert early.json()["error"] == "CANNOT_APPLY_RETURN"
 
     authed_api.ship_order(order_id)
+    shipped = authed_api.apply_return(order_id, "已出貨仍想退")
+    assert shipped.status == 409
+    assert shipped.json()["error"] == "CANNOT_APPLY_RETURN"
+
     authed_api.confirm_receipt(order_id)
     empty_reason = authed_api.apply_return(order_id, "")
     assert empty_reason.status == 400

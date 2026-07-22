@@ -168,3 +168,45 @@ def test_非已完成訂單直開退貨頁導回詳情(page: Page) -> None:
     expect(page).to_have_url(re.compile(rf".*/orders/{re.escape(order_id)}$"), timeout=15_000)
     expect(page.get_by_role("heading", name="訂單詳情")).to_be_visible()
     expect(page.locator("main")).to_contain_text("待出貨")
+
+
+def test_僅已完成訂單顯示申請退貨按鈕(page: Page) -> None:
+    """R-7.1：待出貨／已出貨無申請退貨；轉已完成後 7 天內出現按鈕。"""
+    login(page)
+    order_id = _complete_order(page, "退貨七日窗測試")
+    open_order(page, order_id)
+    expect(page.get_by_role("button", name="申請退貨")).to_have_count(0)
+
+    ship_order(page, order_id)
+    expect(page.get_by_role("button", name="申請退貨")).to_have_count(0)
+
+    confirm_receipt(page, order_id)
+    expect(page.get_by_role("button", name="申請退貨")).to_be_visible()
+
+
+def test_完成超過七日不提供申請退貨(page: Page) -> None:
+    """R-7.1：完成後第 8 天起詳情不再提供「申請退貨」。"""
+    login(page)
+    order_id = _complete_order(page, "退貨逾期測試")
+    open_order(page, order_id)
+    ship_order(page, order_id)
+    confirm_receipt(page, order_id)
+    expect(page.get_by_role("button", name="申請退貨")).to_be_visible()
+
+    def fulfill_overdue(route) -> None:
+        if route.request.method != "GET":
+            route.continue_()
+            return
+        response = route.fetch()
+        data = response.json()
+        data["status"] = "已完成"
+        data["returnStatus"] = "無退貨"
+        data["completedAt"] = "2020-01-01 10:00"
+        data["canApplyReturn"] = False
+        route.fulfill(status=200, json=data)
+
+    page.route(re.compile(rf".*/api/orders/{re.escape(order_id)}$"), fulfill_overdue)
+    page.reload(wait_until="domcontentloaded")
+    expect(page.get_by_role("heading", name="訂單詳情")).to_be_visible(timeout=15_000)
+    expect(page.locator("main")).to_contain_text("已完成")
+    expect(page.get_by_role("button", name="申請退貨")).to_have_count(0)
