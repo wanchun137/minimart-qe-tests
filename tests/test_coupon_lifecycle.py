@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 import pytest
 from playwright.sync_api import Page, expect
@@ -201,3 +203,37 @@ def test_已過期券不可在結帳選用(page: Page) -> None:
     expect(page.locator("main")).to_contain_text("舊版折五十券")
     expect(page.locator("main")).to_contain_text("已過期")
     expect(page.get_by_role("radio", name=re.compile(r"舊版折五十券"))).to_have_count(0)
+
+
+def test_優惠券狀態依到期日規則(page: Page) -> None:
+    """R-4.14：到期日當天仍可用；到期日隔天起為已過期（對照 API status）。"""
+    login(page)
+    today = datetime.now(ZoneInfo("Asia/Taipei")).date()
+    response = page.request.get("/api/coupons")
+    assert response.ok, response.text()
+    coupons = response.json()
+    assert coupons, "帳號應有內建優惠券"
+
+    saw_expired = False
+    saw_usable_on_or_after_today = False
+    for coupon in coupons:
+        if coupon.get("status") == "已使用":
+            continue
+        expires_raw = coupon.get("expiresAt", "")
+        expires = date.fromisoformat(str(expires_raw)[:10])
+        if expires < today:
+            assert coupon["status"] == "已過期", (
+                f"{coupon.get('code')} 到期日 {expires} 已過，狀態應為已過期，"
+                f"實際 {coupon['status']!r}"
+            )
+            saw_expired = True
+        else:
+            # 到期日當天（含）或未來 → 尚未過期
+            assert coupon["status"] == "未使用", (
+                f"{coupon.get('code')} 到期日 {expires}（今天 {today}）應仍為未使用，"
+                f"實際 {coupon['status']!r}"
+            )
+            saw_usable_on_or_after_today = True
+
+    assert saw_expired, "應至少有一張已過期券（附錄 A EXPIRED50）以驗證隔日規則"
+    assert saw_usable_on_or_after_today, "應至少有一張未過期券以驗證到期日當天仍可用"
