@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from tests.api.helpers.client import MiniMartApiClient
-from tests.api.helpers.pricing import assert_preview_amounts
+from tests.api.helpers.pricing import assert_preview_amounts, assert_pricing_order
 
 COUPON_PCT15 = "PCT15"
 COUPON_SAVE100 = "SAVE100"
@@ -87,6 +87,7 @@ def test_免運券不論金額運費為零(authed_api: MiniMartApiClient) -> Non
         shipping=0,
         payable=mug["unitPrice"],
     )
+    assert_pricing_order(preview, free_shipping_coupon=True)
 
 
 def test_無效券碼靜默忽略(authed_api: MiniMartApiClient) -> None:

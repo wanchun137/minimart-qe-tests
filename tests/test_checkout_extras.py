@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 from playwright.sync_api import Page, expect
 
 from tests.helpers.auth import login
-from tests.helpers.cart import add_product_from_list, clear_cart
+from tests.helpers.cart import add_product_from_list, add_product_with_quantity, clear_cart
 from tests.helpers.checkout import (
     fill_and_submit_checkout,
     go_to_checkout,
@@ -40,23 +40,33 @@ def test_結帳摘要金額無小數點(page: Page) -> None:
 
 
 def test_折扣總額不得使折扣後商品金額為負(page: Page) -> None:
-    """R-2.6：折抵後商品金額不為負（應付 − 運費 ≥ 0）。"""
+    """R-2.6：折抵後商品金額不為負；折扣總額 ≤ 商品小計。"""
     login(page)
     clear_cart(page)
-    add_product_from_list(page, "純棉素色 T 恤")
+    add_product_with_quantity(page, "機械式鍵盤", 1)
     go_to_checkout(page)
-    # 優先選低門檻可用券；耗盡時仍驗證無券情境
-    for name in ("免運券", "新人小禮券"):
+    for name in ("滿三千折三百券", "全站 85 折券", "新人小禮券"):
         radio = page.get_by_role("radio", name=re.compile(name))
         if radio.count():
             radio.first.click()
             break
-    payable_text = summary_row_value(page, "應付金額").inner_text()
-    amount = int(re.sub(r"[^\d]", "", payable_text))
-    assert amount >= 0
-    shipping_text = summary_row_value(page, "運費").inner_text()
-    shipping = int(re.sub(r"[^\d]", "", shipping_text) or "0")
-    assert amount - shipping >= 0, f"折抵後商品金額為負：應付 {amount}、運費 {shipping}"
+
+    def _nt(text: str) -> int:
+        digits = re.sub(r"[^\d]", "", text)
+        return int(digits) if digits else 0
+
+    subtotal = _nt(summary_row_value(page, "商品小計").inner_text())
+    bulk = _nt(summary_row_value(page, "滿額折扣").inner_text())
+    coupon = _nt(summary_row_value(page, "優惠券折抵").inner_text())
+    payable = _nt(summary_row_value(page, "應付金額").inner_text())
+    shipping = _nt(summary_row_value(page, "運費").inner_text())
+    after_discount = payable - shipping
+
+    assert after_discount >= 0, f"折抵後商品金額為負：應付 {payable}、運費 {shipping}"
+    assert bulk + coupon <= subtotal, (
+        f"折扣總額 {bulk + coupon} 超過商品小計 {subtotal}（R-2.6）"
+    )
+    assert payable == after_discount + shipping
 
 
 def test_空購物車直開結帳導向購物車(page: Page) -> None:

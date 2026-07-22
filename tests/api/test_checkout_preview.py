@@ -77,18 +77,30 @@ def test_藍牙耳機_PRD_範例_4_百分比四捨五入(authed_api: MiniMartApi
 
 
 def test_七步計價順序恆等式成立(authed_api: MiniMartApiClient) -> None:
-    """R-4.15：多種組合下 payable 皆等於逐步重算結果。"""
+    """R-4.15／R-2.6／R-5.1：多種組合下七步重算（含折扣上限與運費級距）成立。"""
     keyboard = authed_api.product_by_name("機械式鍵盤")
     mug = authed_api.product_by_name("手沖咖啡濾杯")
     scenarios = [
-        (mug["id"], 1, None),
-        (mug["id"], 2, None),
-        (keyboard["id"], 1, None),
-        (keyboard["id"], 1, COUPON_SAVE300),
-        (mug["id"], 1, COUPON_FREESHIP),
+        (mug["id"], 1, None, False),
+        (mug["id"], 2, None, False),
+        (keyboard["id"], 1, None, False),
+        (keyboard["id"], 1, COUPON_SAVE300, False),
+        (mug["id"], 1, COUPON_FREESHIP, True),
     ]
-    for product_id, qty, coupon in scenarios:
+    for product_id, qty, coupon, free_ship in scenarios:
         authed_api.clear_cart()
         authed_api.add_to_cart(product_id, qty)
         preview = authed_api.checkout_preview(coupon)
-        assert_pricing_order(preview)
+        assert_pricing_order(preview, free_shipping_coupon=free_ship)
+
+
+def test_折扣總額不超過小計_折扣後不為負(authed_api: MiniMartApiClient) -> None:
+    """R-2.6：滿額＋券折合計不得使折扣後商品金額為負。"""
+    require_unused_coupon(authed_api, COUPON_SAVE300)
+    product = authed_api.product_by_name("機械式鍵盤")
+    authed_api.add_to_cart(product["id"], 1)
+    preview = authed_api.checkout_preview(COUPON_SAVE300)
+    discount_total = preview["bulkDiscount"] + preview["couponDiscount"]
+    assert discount_total <= preview["subtotal"]
+    assert preview["payable"] - preview["shipping"] >= 0
+    assert_pricing_order(preview)
