@@ -16,6 +16,36 @@ from tests.helpers.products import (
 )
 
 
+def test_香氛蠟燭禮盒商品圖片正常載入(page: Page) -> None:
+    """R-9.2 / D-02：香氛蠟燭禮盒卡片圖片應可正常載入（naturalWidth > 0）。"""
+    login(page)
+    product = product_by_name_via_api(page, "香氛蠟燭禮盒")
+    image_url = product.get("imageUrl", "")
+    assert image_url, "API 應提供 imageUrl"
+
+    img_resp = page.request.get(image_url)
+    content_type = (img_resp.headers.get("content-type") or "").lower()
+    body_prefix = img_resp.text()[:80].lstrip()
+    assert img_resp.ok, f"imageUrl 應可存取：{image_url} → {img_resp.status}"
+    assert "image/svg" in content_type or body_prefix.startswith("<svg"), (
+        f"imageUrl 應回傳 SVG 圖片（D-02），"
+        f"status={img_resp.status}，content-type={content_type!r}，"
+        f"body={body_prefix[:60]!r}"
+    )
+
+    page.goto("/", wait_until="domcontentloaded")
+    card = page.locator(".product-card", has_text="香氛蠟燭禮盒").first
+    expect(card).to_be_visible()
+    img = card.locator(".product-image, img").first
+    expect(img).to_be_visible()
+    page.wait_for_timeout(1_000)
+    natural_width = img.evaluate("el => el.naturalWidth")
+    assert natural_width > 0, (
+        f"香氛蠟燭禮盒圖片應正常載入（D-02），"
+        f"naturalWidth={natural_width}，imageUrl={image_url}"
+    )
+
+
 def test_商品卡片與詳情顯示必要欄位(page: Page) -> None:
     """R-3.1／R-9.2／R-10.1：列表卡與詳情含名稱、分類、單價、庫存文字。"""
     login(page)
