@@ -71,7 +71,7 @@ tests/
   test_stock_boundaries.py # 庫存／數量上限（R-3、R-10、R-11）
   test_stock_effects.py    # 下單扣庫存／取消退款回補（R-3.5、R-3.7；D-09～11）
   test_nav_extras.py       # 通知徽章／登出保留（R-1.5、R-1.8；D-15）
-  test_product_ui.py       # 商品欄位／加車不扣庫存／詳情售完（R-3.1、R-3.3、R-10）
+  test_product_ui.py       # 商品欄位／加車不扣庫存／詳情售完／香氛蠟燭破圖（R-3.1、R-3.3、R-9.2／D-02、R-10）
   test_checkout_extras.py  # 運費位置／下單清空購物車／完成頁（R-5.4、R-12.8～12.9、R-13.3；D-16）
   test_coupon_lifecycle.py # 用券已使用／免運路徑／還券／過期（R-4.12～4.14；D-18）
   test_return_extras.py    # 已取消終態／退貨中按鈕／撤銷（R-6.7、R-7.11～7.13、R-16；D-17）
