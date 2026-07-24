@@ -1,4 +1,3 @@
-START Fri Jul 24 14:24:43 CST 2026 BASE_URL=https://cand2.tail296b14.ts.net stamp=20260724-1424
 ============================= test session starts ==============================
 platform darwin -- Python 3.11.3, pytest-9.1.1, pluggy-1.6.0
 rootdir: /Users/chun/Documents/minimart-qe-tests
@@ -1917,5 +1916,3 @@ FAILED tests/test_stock_effects.py::test_取消訂單後庫存應回補[chromium
 FAILED tests/test_stock_effects.py::test_退款完成後庫存應回補[chromium] - Ass...
 FAILED tests/test_validation_extras.py::test_折扣碼重複領取應顯示錯誤[chromium]
 ====== 41 failed, 125 passed, 9 skipped, 3 xfailed in 1618.85s (0:26:58) =======
-EXIT:
-END Fri Jul 24 14:51:43 CST 2026
